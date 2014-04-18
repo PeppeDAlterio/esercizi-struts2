@@ -161,10 +161,10 @@
 		</definition>
 		
 		<!-- Modifica ordine -->
-			<!-- Modifica articoli ordine -->
-			<definition name="modificaArticoliOrdine" extends="azione">
-				<put-attribute name="title" value="Modifica articoli ordine" />
-				<put-attribute name="body" value="/pages/area_clienti/forms/modifica_articoli_ordine.jsp" />
+			<!-- Modifica indirizzo ordine -->
+			<definition name="modificaIndirizzoOrdine" extends="azione">
+				<put-attribute name="title" value="Modifica indirizzo ordine" />
+				<put-attribute name="body" value="/pages/area_clienti/forms/modifica_indirizzo_ordine.jsp" />
 			</definition>
 
 <!-- FINE Area clienti -->

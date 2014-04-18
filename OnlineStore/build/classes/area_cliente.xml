@@ -50,19 +50,35 @@
 		</action>
 		
 		<!-- Modifica ordine -->
-			<!-- Modifica articoli ordine -->
-			<action name="modificaArticoliOrdine" class="it.store.action.area_cliente.ModificaOrdineAction">
-				<result name="login" type="tiles">loginForm</result>
+			<!-- Modifica indirizzo ordine -->
+				<!-- Form -->
+				<action name="modificaIndirizzoOrdineForm" class="it.store.action.area_cliente.ModificaOrdineAction">
+					<result name="login" type="tiles">loginForm</result>
+					
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
 				
-				<result name="access_denied" type="redirectAction">
-					<param name="actionName">403</param>
-					<param name="namespace">/</param>
-				</result>
-			
-				<result name="success" type="tiles">modificaArticoliOrdine</result>
+					<result name="success" type="tiles">modificaIndirizzoOrdine</result>
+					
+					<result name="*" type="tiles">dettagliOrdine</result>
+				</action>
 				
-				<result name="*" type="tiles">dettagliOrdine</result>
-			</action>
+				<!-- Action -->
+				<action name="modificaIndirizzoOrdine" class="it.store.action.area_cliente.ModificaIndirizzoOrdineAction">
+					<result name="login" type="tiles">loginForm</result>
+					
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+					
+					
+					<result name="success" type="tiles">dettagliOrdine</result>
+				
+					<result name="*" type="tiles">modificaIndirizzoOrdine</result>
+				</action>
 	
 </package>
 
