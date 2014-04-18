@@ -15,12 +15,6 @@
 	<tr class="commonTr">
 		<th class="commonTh" colspan="2">
 			<s:text name="ordineView.lista_articoli" />
-			&nbsp;-&nbsp;
-			[<s:a action="modificaArticoliOrdine">
-				<s:param name="id_ordine" value="#ordineBean.ordine.id_ordine" />
-				
-				<s:text name="global.modifica" />
-			</s:a>]
 		</th>
 	</tr>
 	
@@ -48,7 +42,7 @@
 		<th class="commonTh" colspan="2">
 			<s:text name="ordineView.indirizzo_spedizione" />
 			&nbsp;-&nbsp;
-			[<s:a action="modificaIndirizzoOrdine">
+			[<s:a action="modificaIndirizzoOrdineForm" namespace="/areacliente">
 				<s:param name="id_ordine" value="#ordineBean.ordine.id_ordine" />
 				
 				<s:text name="global.modifica" />

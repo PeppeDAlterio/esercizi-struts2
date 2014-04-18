@@ -76,7 +76,9 @@
 					
 					
 					<result name="success" type="tiles">dettagliOrdine</result>
-				
+					
+					<result name="error" type="tiles">dettagliOrdine</result>
+					
 					<result name="*" type="tiles">modificaIndirizzoOrdine</result>
 				</action>
 	

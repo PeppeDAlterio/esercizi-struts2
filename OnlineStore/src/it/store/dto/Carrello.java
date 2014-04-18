@@ -49,8 +49,6 @@ public class Carrello {
 		tmp = tmp.replace(",", ".");
 		prezzo_totale = Float.parseFloat(tmp);
 		
-		System.out.println(prezzo_totale);
-		
 		setPrezzo_totale(prezzo_totale);
 		
 		return this.prezzo_totale;

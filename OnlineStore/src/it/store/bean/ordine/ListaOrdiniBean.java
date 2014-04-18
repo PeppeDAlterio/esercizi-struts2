@@ -49,12 +49,10 @@ public class ListaOrdiniBean {
 	
 	public void setPage(String page) {
 		this.page = Integer.parseInt(page);
-		System.out.println("wow"+this.page);
 	}
 
 	public void setPage(int page) {
 		this.page = page;
-		System.out.println("wow__"+this.page);
 	}
 
 	public int getPagine_totali() {

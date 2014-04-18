@@ -246,5 +246,50 @@ public class OrdineService extends DatabaseService {
 		
 		ordine.setIndirizzo(indirizzo);
 	}
+	
+	/*
+	 * @return: false=ok | true=errore: ordine già spedito o non trovato
+	 */
+	public boolean modificaIndirizzoOrdine(int id_ordine, String utente, Indirizzo indirizzo) throws SQLException {
+		
+		String query = "SELECT stato FROM Ordine WHERE id=? AND Utente_email=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, id_ordine);
+		statement.setString(2, utente);
+		ResultSet result = statement.executeQuery();
+		
+		if(result.next()) {
+			if(result.getString(1).equals("spedito")) {
+				result.close();
+				statement.close();
+				return true;
+			}
+		} else { //ordine non trovato
+			result.close();
+			statement.close();
+			return true;
+		}
+		
+		result.close();
+		statement.close();
+		
+		//trovato e non ancora spedito
+		query = "UPDATE Ordine_indirizzo SET nome_cognome=?, indirizzo_1=?, indirizzo_2=?, citta=?, provincia=?, cap=?, paese=?, telefono=? WHERE Ordine_id=?";
+		statement = conn.prepareStatement(query);
+		statement.setString(1, indirizzo.nome_cognome);
+		statement.setString(2, indirizzo.indirizzo_1);
+		statement.setString(3, indirizzo.indirizzo_2);
+		statement.setString(4, indirizzo.citta);
+		statement.setString(5, indirizzo.provincia);
+		statement.setString(6, indirizzo.cap);
+		statement.setString(7, indirizzo.paese);
+		statement.setString(8, indirizzo.telefono);
+		statement.setInt(9, id_ordine);
+		statement.executeUpdate();
+		
+		statement.close();
+		
+		return false;
+	}
 
 }
