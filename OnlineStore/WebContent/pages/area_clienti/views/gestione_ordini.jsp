@@ -71,7 +71,7 @@
 				<br>
 				<s:text name="listaOrdiniView.totale" />:&nbsp;<s:property value="#ordine.totale" />&#8364;
 				<br>
-				<s:text name="listaOrdiniView.stato" />:&nbsp;<i><s:property value="#ordine.stato" /></i>
+				<s:text name="listaOrdiniView.stato" />:&nbsp;<i><s:text name="stato.%{#ordine.stato}" /></i>
 			</td>
 		</tr>
 	</s:iterator>	

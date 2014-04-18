@@ -53,7 +53,7 @@ public class Ordine {
 		return stato;
 	}
 
-	public void setStato(String stato) {
+	public void setStato(String stato) {		
 		this.stato = stato;
 	}
 
