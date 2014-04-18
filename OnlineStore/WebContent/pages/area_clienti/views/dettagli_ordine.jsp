@@ -11,6 +11,27 @@
 	<s:text name="ordineView.titolo" />
 </H3>
 
+<s:if test="hasActionErrors()">
+   <div class="actionError">
+      <s:iterator value="actionErrors">
+        <div align="center">
+			<span><s:property escape="false" /></span>
+		</div>
+	  </s:iterator>
+   </div>
+   <br>
+</s:if>
+<s:if test="hasActionMessages()">
+   <div class="actionMessage">
+      <s:iterator value="actionMessages">
+        <div align="center">
+			<span><s:property escape="false" /></span>
+		</div>
+	  </s:iterator>
+   </div>
+   <br>
+</s:if>
+
 <table class="commonTable" style="width: 90%;">
 	<tr class="commonTr">
 		<th class="commonTh" colspan="2">
@@ -41,12 +62,14 @@
 	<tr class="commonTr">
 		<th class="commonTh" colspan="2">
 			<s:text name="ordineView.indirizzo_spedizione" />
-			&nbsp;-&nbsp;
-			[<s:a action="modificaIndirizzoOrdineForm" namespace="/areacliente">
-				<s:param name="id_ordine" value="#ordineBean.ordine.id_ordine" />
-				
-				<s:text name="global.modifica" />
-			</s:a>]
+			<s:if test="%{#ordineBean.ordine.stato!='spedito'}">
+				&nbsp;-&nbsp;
+				[<s:a action="modificaIndirizzoOrdineForm" namespace="/areacliente">
+					<s:param name="id_ordine" value="#ordineBean.ordine.id_ordine" />
+					
+					<s:text name="global.modifica" />
+				</s:a>]
+			</s:if>
 		</th>
 	</tr>
 			
