@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<!-- 
+	Area dedicata a tutti gli utenti (che non hanno effettuato l'accesso).
+-->
+
+<package name="utente" namespace="/utente" extends="tiles">
+
+<!-- Signup clienti -->
+	<!-- Form -->
+	<action name="signupClienteForm">
+		<result type="tiles">signupForm</result>
+	</action>
+	
+	<!-- Signup action -->
+	<action name="signupCliente" class="it.store.action.utente.SignupAction" method="nuovoCliente">
+		<result name="success" type="tiles">loginForm</result>
+		
+		<result name="input" type="tiles">signupForm</result>
+		<result name="error" type="tiles">signupForm</result>
+	</action>
+
+<!-- Login -->
+	<!-- Form -->
+	<action name="loginForm">
+		<result type="tiles">loginForm</result>
+	</action>
+	
+	<!-- Login action -->
+	<action name="login" class="it.store.action.utente.LoginAction" method="login">
+		<result name="success" type="tiles">home</result>
+		
+		<result name="input" type="tiles">loginForm</result>
+		<result name="error" type="tiles">loginForm</result>
+	</action>
+	
+</package>
+
+</struts>

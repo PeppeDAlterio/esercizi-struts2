@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<!-- 
+	Area riservata agli amministrato: permette la gestione totale del sito.
+	È necessario effettuare il login come amministratore (o superiore) per accedere a quest'area del sito. 
+-->
+
+<package name="area_admin" namespace="/admin" extends="tiles">
+
+	<interceptors>
+		<interceptor name="checkLoginAdminInterceptor" class="it.store.interceptor.CheckLoginAdminInterceptor" />
+		
+		<interceptor-stack name="checkLoginStack">
+			<interceptor-ref name="checkLoginAdminInterceptor" />
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+	</interceptors>
+	
+	<default-interceptor-ref name="checkLoginStack"/>
+
+<!-- Gestione catalogo -->
+	<!-- Gestione categorie -->
+		<!-- View -->
+		<action name="gestioneCategorie">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">gestioneCategorie</result>
+		</action>
+		
+		<!-- Aggiungi categoria -->
+			<!-- Action -->
+			<action name="aggiungiCategoria" class="it.store.action.area_admin.AggiungiCategoriaAction" method="aggiungiCategoria">
+				<result name="login" type="tiles">loginForm</result>
+			
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				<result name="*" type="tiles">gestioneCategorie</result>
+			</action>
+			
+		<!-- Modifica categoria -->
+			<!-- Form -->
+			<action name="modificaCategoriaForm">
+				<result name="login" type="tiles">loginForm</result>
+			
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				
+				<result name="*" type="tiles">modificaCategoria</result>
+			</action>
+			
+			<!-- Action -->
+			<action name="modificaCategoria" class="it.store.action.area_admin.ModificaCategoriaAction">
+					<result name="login" type="tiles">loginForm</result>
+			
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				
+				<result name="success" type="tiles">gestioneCategorie</result>
+				
+				<result name="*" type="tiles">modificaCategoria</result>
+			</action>
+			
+		<!-- Rimuovi categoria -->
+			<!-- Action -->
+			<action name="rimuoviCategoria" class="it.store.action.area_admin.AggiungiCategoriaAction" method="rimuoviCategoria">
+				<param name="rimuovi" />
+				
+				<result name="login" type="tiles">loginForm</result>
+			
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				
+				<result name="*" type="tiles">gestioneCategorie</result>			
+			</action>
+						
+</package>
+
+</struts>

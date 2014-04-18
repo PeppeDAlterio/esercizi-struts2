@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<!-- 
+	Area dedicata alla gestione degli ordini: carrello, cassa e feedback
+	namespace: /ordine 
+-->
+
+<package name="ordine" namespace="/ordine" extends="tiles">
+
+	<interceptors>
+		<interceptor name="checkLoginInterceptor" class="it.store.interceptor.CheckLoginInterceptor" />
+		
+		<interceptor-stack name="checkLoginStack">
+			<interceptor-ref name="checkLoginInterceptor" />
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+	</interceptors>
+	
+	<default-interceptor-ref name="checkLoginStack"/>
+	
+	<!-- Carrello -->
+	<action name="carrello">
+		<interceptor-ref name="defaultStack" />
+		
+		<result type="tiles">carrello</result>
+	</action>
+	
+	<!-- Gestione carrello -->
+		<!-- Aggiunta articolo -->
+		<action name="aggiungiCarrello" class="it.store.action.ordine.GestioneCarrelloAction" method="aggiungiArticolo">
+			<interceptor-ref name="defaultStack" />
+		
+			<result name="*" type="tiles">carrello</result>
+		</action>
+		
+		<!-- Rimozione articolo -->
+		<action name="rimuoviArticoloCarrello" class="it.store.action.ordine.GestioneCarrelloAction" method="rimuoviArticolo">
+			<interceptor-ref name="defaultStack" />
+			
+			<result name="*" type="tiles">carrello</result>
+		</action>
+		
+		<!-- Aggiorna quantità -->
+		<action name="aggiornaCarrello" class="it.store.action.ordine.GestioneCarrelloAction" method="aggiornaQuantita">
+			<interceptor-ref name="defaultStack" />
+			
+			<result name="*" type="tiles">carrello</result>
+		</action>
+		
+	<!-- Cassa -->
+		<!-- Inserimento indirizzo -->
+			<!-- Form -->
+			<action name="indirizzoOrdineForm" class="it.store.action.ordine.GestioneDatiOrdineAction" method="setCarrello">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+		
+		
+				<result name="success" type="tiles">indirizzoOrdine</result>
+				
+				<result name="*" type="tiles">carrello</result>
+			</action>
+			
+			<!-- Action -->
+			<action name="indirizzoOrdine" class="it.store.action.ordine.GestioneDatiOrdineAction" method="setIndirizzo">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+			
+				
+				<result name="success" type="tiles">confermaOrdine</result>
+							
+				<result name="*" type="tiles">indirizzoOrdine</result>
+			</action>
+		
+		
+			<!-- POPUP: Selezione indirizzo da rubrica -->
+			<action name="listaIndirizziRubrica">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				
+				<result name="*">/pages/ordine/popups/lista_indirizzi_rubrica.jsp</result>
+			</action>
+			
+		<!-- Conferma ordine -->
+		<action name="confermaOrdine" class="it.store.action.ordine.ConfermaOrdineAction" method="conferma">
+			<result name="login" type="tiles">loginForm</result>
+				
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="success" type="tiles">gestioneOrdini</result>
+			<result name="*" type="tiles">carrello</result>
+		</action>
+		
+		<!-- Annulla ordine -->
+		<action name="annullaOrdine" class="it.store.action.ordine.ConfermaOrdineAction" method="annulla">
+			<result name="login" type="tiles">loginForm</result>
+				
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			<result name="*" type="tiles">carrello</result>
+		</action>
+	
+</package>
+
+</struts>
