@@ -159,6 +159,13 @@
 			<put-attribute name="title" value="Dettagli ordine" />
 			<put-attribute name="body" value="/pages/area_clienti/views/dettagli_ordine.jsp" />
 		</definition>
+		
+		<!-- Modifica ordine -->
+			<!-- Modifica articoli ordine -->
+			<definition name="modificaArticoliOrdine" extends="azione">
+				<put-attribute name="title" value="Modifica articoli ordine" />
+				<put-attribute name="body" value="/pages/area_clienti/forms/modifica_articoli_ordine.jsp" />
+			</definition>
 
 <!-- FINE Area clienti -->
 

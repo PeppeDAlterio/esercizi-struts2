@@ -48,6 +48,21 @@
 			
 			<result name="*" type="tiles">dettagliOrdine</result>
 		</action>
+		
+		<!-- Modifica ordine -->
+			<!-- Modifica articoli ordine -->
+			<action name="modificaArticoliOrdine" class="it.store.action.area_cliente.ModificaOrdineAction">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+			
+				<result name="success" type="tiles">modificaArticoliOrdine</result>
+				
+				<result name="*" type="tiles">dettagliOrdine</result>
+			</action>
 	
 </package>
 
