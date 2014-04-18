@@ -1,0 +1,82 @@
+@CHARSET "ISO-8859-1";
+
+/*
+	Foglio di stili layout
+*/
+
+table.layoutTable
+{
+    border-spacing:0px;
+    font-family:Georgia, serif;
+    padding:0;
+    box-shadow:0px 0px 0px 0px #000000;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+}
+ 
+th.layoutTh
+{
+	
+    color:#FFFFFF;
+    background:#FFD5AD;
+    background: -moz-linear-gradient(top,  #FFD5AD 0%, #FC9B41 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFD5AD), color-stop(100%,#FC9B41));
+    background: -webkit-linear-gradient(top,#FFD5AD 0%,#FC9B41 100%);
+    background: -o-linear-gradient(top,#FFD5AD 0%,#FC9B41 100%);
+    background: -ms-linear-gradient(top,#FFD5AD 0%,#FC9B41 100%);
+    background: linear-gradient(top,#FFD5AD 0%,#FC9B41 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFD5AD',endColorstr='#FC9B41',GradientType=0s);
+    
+    font-size:14px;
+    font-weight:bold;
+    padding:5px;
+    text-align:center;
+    vertical-align:middle;
+}
+ 
+tr.layoutTr
+{
+    color:#000000;
+    font-size:13px;
+    font-weight:normal;
+}
+ 
+td.layoutTd
+{
+    padding:3px 5px;
+    text-align:center;
+    vertical-align:top;
+}
+ 
+th.layoutTh:first-child
+{
+    border-top-left-radius:10px;
+}
+ 
+th.layoutTh:last-child
+{
+    border-top-right-radius:10px;
+}
+
+h3, b.arancio
+{
+	color: #D77820;	
+}
+
+ul {
+    list-style: none;
+    padding:0;
+    margin:0;
+}
+
+li { 
+    padding-left: 1em; 
+    text-indent: -.7em;
+}
+
+li:before {
+    content: "\2022 \0020";
+    color: #D77820;
+}

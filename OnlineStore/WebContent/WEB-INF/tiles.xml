@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+<!--
+	Pagina di Catalogo: pagine in cui bisogna e/o si vuole far vedere un prodotto al cliente (homepage, categorie, ...).
+	Pagina di Azione: pagine in cui non vengono mostrati i prodotti in catalogo (pagina prodotto, ordine, modifica profilo, ...).
+	
+	Le pagine sono inoltre divise in:
+	- pagine cliente: pagine accessibili dai clienti per l'utilizzo del sito web.
+	- pagine dipendente: pagine accessibili dai dipendenti, per la gestione degli ordine e del sito in genere.
+ -->
+ 
+<!-- INIZIO Layouts -->
+
+	<!-- Layout pagine di azione -->
+		<definition name="azione" template="/tiles/azione/layout.jsp">
+			<put-attribute name="title" />
+			<put-attribute name="logo" value="/tiles/common/logo.jsp" />
+			<put-attribute name="userbar" value="/tiles/common/userbar.jsp" />
+			<put-attribute name="body" />
+			<put-attribute name="footer" value="/tiles/common/footer.jsp" />
+		</definition>
+	
+	<!-- Layout pagine di catalogo -->
+		<definition name="catalogo" template="/tiles/catalogo/layout.jsp">
+			<put-attribute name="title" />
+			<put-attribute name="logo" value="/tiles/common/logo.jsp" />
+			<put-attribute name="userbar" value="/tiles/common/userbar.jsp" />
+			<put-attribute name="body" />
+			<put-attribute name="r_box_up" value="/tiles/catalogo/r_box_up.jsp" />
+			<put-attribute name="r_box_dw" value="/tiles/catalogo/r_box_dw.jsp" />
+			<put-attribute name="footer" value="/tiles/common/footer.jsp" />
+		</definition>
+
+<!-- FINE layouts -->
+
+<!--  -->
+
+<!-- Homepage -->
+	<definition name="home" extends="catalogo">
+		<put-attribute name="title" value="Homepage" />
+		<put-attribute name="body" value="/pages/home.jsp" />
+	</definition>
+	
+<!--  -->
+
+<!-- INIZIO Catalogo -->
+	
+	<!-- Lista categorie -->
+	<definition name="listaCategorie" extends="catalogo">
+		<put-attribute name="title" value="Categorie" />
+		<put-attribute name="body" value="/pages/catalogo/views/lista_categorie.jsp" />
+	</definition>
+	
+	<!-- Scheda articolo -->
+	<definition name="schedaArticolo" extends="catalogo">
+		<put-attribute name="title" value="Scheda articolo" />
+		<put-attribute name="body" value="/pages/catalogo/views/scheda_articolo.jsp" />
+	</definition>
+	
+<!-- FINE Catalogo -->
+
+<!--  -->
+
+<!-- INIZIO Ordine -->
+	
+	<!-- Carrello -->
+	<definition name="carrello" extends="azione">
+		<put-attribute name="title" value="Carrello" />
+		<put-attribute name="body" value="/pages/ordine/views/carrello.jsp" />
+	</definition>
+	
+	<!-- Cassa -->
+		<!-- Ordine spedizione -->
+		<definition name="indirizzoOrdine" extends="azione">
+			<put-attribute name="title" value="Indirizzo di spedizione" />
+			<put-attribute name="body" value="/pages/ordine/forms/ordine_indirizzo.jsp" />
+		</definition>
+		
+		<!-- Conferma ordine -->
+		<definition name="confermaOrdine" extends="azione">
+			<put-attribute name="title" value="Conferma ordine" />
+			<put-attribute name="body" value="/pages/ordine/views/conferma_ordine.jsp" />
+		</definition>
+			
+<!-- FINE Ordine -->
+
+<!--  -->
+	
+<!-- INIZIO Utente -->
+
+	<!-- Login -->
+	<definition name="loginForm" extends="azione">
+		<put-attribute name="title" value="Accedi" />
+		<put-attribute name="body" value="/pages/utente/forms/login_form.jsp" />
+	</definition>
+	
+	<!-- Registrazione utenti -->
+	<definition name="signupForm" extends="catalogo">
+		<put-attribute name="title" value="Registrati" />
+		<put-attribute name="body" value="/pages/utente/forms/signup_form.jsp" />
+	</definition>
+	
+<!-- FINE Utente -->
+
+<!--  -->
+
+<!-- INIZIO Account -->
+
+	<!-- Pannello di controllo -->
+	<definition name="pannelloControlloAccount" extends="catalogo">
+		<put-attribute name="title" value="Pannello di controllo" />
+		<put-attribute name="body" value="/pages/account/views/pannello_di_controllo_account.jsp" />
+	</definition>
+	
+	<!-- Modifica profilo -->
+	<definition name="modificaProfiloForm" extends="azione">
+		<put-attribute name="title" value="Modifica profilo" />
+		<put-attribute name="body" value="/pages/account/forms/modifica_profilo_form.jsp" />
+	</definition>
+	
+	<!-- Modifica password -->
+	<definition name="modificaPasswordForm" extends="azione">
+		<put-attribute name="title" value="Modifica password" />
+		<put-attribute name="body" value="/pages/account/forms/modifica_password_form.jsp" />
+	</definition>
+	
+	<!-- Rubrica -->
+			<!-- Gestione rubrica -->
+			<definition name="rubricaUtente" extends="catalogo">
+				<put-attribute name="title" value="Rubrica utente" />
+				<put-attribute name="body" value="/pages/account/views/rubrica_indirizzi.jsp" />
+			</definition>	
+
+			<!-- Aggiungi/modifica indirizzo in rubrica -->
+			<definition name="aggiornaRubrica" extends="azione">
+				<put-attribute name="title" value="Gestione rubrica" />
+				<put-attribute name="body" value="/pages/account/forms/nuovo_indirizzo_form.jsp" />
+			</definition>
+			
+<!-- FINE Account -->
+
+<!--  -->
+
+<!-- INIZIO Area clienti -->
+
+	<!-- Gestione ordini -->
+		<!-- Lista ordini -->
+		<definition name="gestioneOrdini" extends="catalogo">
+			<put-attribute name="title" value="Gestione ordini" />
+			<put-attribute name="body" value="/pages/area_clienti/views/gestione_ordini.jsp" />
+		</definition>
+		
+		<!-- Dettagli ordine -->
+		<definition name="dettagliOrdine" extends="azione">
+			<put-attribute name="title" value="Dettagli ordine" />
+			<put-attribute name="body" value="/pages/area_clienti/views/dettagli_ordine.jsp" />
+		</definition>
+
+<!-- FINE Area clienti -->
+
+<!--  -->
+
+<!-- INIZIO Area operatore -->
+	<definition name="pannelloControlloSito" extends="azione">
+		<put-attribute name="title" value="Pannello di controllo" />
+		<put-attribute name="body" value="/pages/area_operatore/views/pannello_di_controllo_sito.jsp" />
+	</definition>
+	
+	<definition name="gestioneArticoli" extends="azione">
+		<put-attribute name="title" value="Gestione articoli" />
+		<put-attribute name="body" value="/pages/area_operatore/views/gestione_articoli.jsp" />
+	</definition>
+	
+	<definition name="nuovoArticoloForm" extends="azione">
+		<put-attribute name="title" value="Nuovo articolo" />
+		<put-attribute name="body" value="/pages/area_operatore/forms/nuovo_articolo.jsp" />
+	</definition>
+<!-- FINE Area operatore -->
+
+<!-- INIZIO Area amministratore -->
+	<definition name="gestioneCategorie" extends="azione">
+		<put-attribute name="title" value="Gestione categorie" />
+		<put-attribute name="body" value="/pages/area_admin/views/gestione_categorie.jsp" />
+	</definition>
+	
+	<definition name="modificaCategoria" extends="azione">
+		<put-attribute name="title" value="Modifica categoria" />
+		<put-attribute name="body" value="/pages/area_admin/forms/modifica_categoria.jsp" />
+	</definition>
+<!-- FINE Area amministratore -->
+
+<!-- INIZIO messaggi d'errore -->
+	<!-- 403 -->
+	<definition name="403" extends="catalogo">
+		<put-attribute name="title" value="Accesso negato" />
+		<put-attribute name="body" value="/pages/errors/403_messaggio.jsp" />
+	</definition>
+	
+	<!-- 404 -->
+	<definition name="404" extends="catalogo">
+		<put-attribute name="title" value="Pagina non trovata" />
+		<put-attribute name="body" value="/pages/errors/404_messaggio.jsp" />
+	</definition>
+<!-- FINE messaggi d'errore -->
+</tiles-definitions>

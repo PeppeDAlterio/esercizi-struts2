@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>OnlineStore</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  <error-page>
+   <error-code>403</error-code>
+   <location>/pages/errors/403_redirect.html</location>
+  </error-page>
+  
+  <error-page>
+   <error-code>404</error-code>
+   <location>/pages/errors/404_redirect.html</location>
+  </error-page>
+    
+  <filter>
+  	<filter-name>struts2</filter-name>
+  	<filter-class>
+		org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+  	</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>struts2</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <listener>
+    <listener-class>
+        org.apache.struts2.tiles.StrutsTilesListener
+    </listener-class>
+  </listener>
+  
+  <context-param>
+    <param-name>tilesDefinitions</param-name>
+    <param-value>/WEB-INF/tiles.xml</param-value>
+  </context-param>
+<!-- 
+  	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Deny Direct Access</web-resource-name>
+			<description></description>
+			<url-pattern>*.jsp</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Denied</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-role>
+		<role-name>Denied</role-name>
+	</security-role>
+-->
+</web-app>

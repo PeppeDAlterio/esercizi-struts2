@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<!-- 
+	Area relativa alla gestione del sito da parte degli operatori.
+	È necessario effettuare il login come operatore (o superiore) per accedere a quest'area del sito. 
+-->
+
+<package name="area_operatore" namespace="/areaoperatore" extends="tiles">
+
+
+	<interceptors>
+		<interceptor name="checkLoginOperatoreInterceptor" class="it.store.interceptor.CheckLoginOperatoreInterceptor"/>
+		
+		<interceptor-stack name="checkLoginStack">
+			<interceptor-ref name="checkLoginOperatoreInterceptor" />
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+	</interceptors>
+	
+	<default-interceptor-ref name="checkLoginStack"/>
+
+
+<!-- Pannello di controllo sito web -->
+	<action name="pannelloControlloSito">
+		<result name="login" type="tiles">loginForm</result>
+		
+		<result name="access_denied" type="redirectAction">
+			<param name="actionName">403</param>
+			<param name="namespace">/</param>
+		</result>
+		
+		
+		<result name="*" type="tiles">pannelloControlloSito</result>
+	</action>
+	
+<!-- Gestione catalogo -->
+	<!-- Gestione articoli -->
+	<action name="gestioneArticoli">
+		<result name="login" type="tiles">loginForm</result>
+		
+		<result name="access_denied" type="redirectAction">
+			<param name="actionName">403</param>
+			<param name="namespace">/</param>
+		</result>
+		
+		<result name="*" type="tiles">gestioneArticoli</result>
+	</action>
+	
+		<!-- Nuovo articolo -->
+			<!-- Form -->
+			<action name="nuovoArticoloForm">
+				<result name="login" type="tiles">loginForm</result>
+			
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+			
+			
+				<result name="*" type="tiles">nuovoArticoloForm</result>
+			</action>
+			
+			<!-- Action -->
+			<action name="nuovoArticolo" class="it.store.action.area_operatore.NuovoArticoloAction">
+				<result name="login" type="tiles">loginForm</result>
+			
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				
+				<result name="success" type="tiles">gestioneArticoli</result>
+				
+				<result name="*" type="tiles">nuovoArticoloForm</result>
+			</action>
+			
+		<!-- Modifica articolo -->
+		<action name="modificaArticolo">			
+			<result name="login" type="tiles">loginForm</result>
+		
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+				
+			<result name="*" type="tiles">nuovoArticoloForm</result>
+		</action>
+	
+		<!-- Ricerca articoli -->
+			<!-- Tramite ID -->
+			<action name="ricercaArticoloById" class="it.store.action.area_operatore.RicercaArticoloByIdAction">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				<result name="*" type="tiles">gestioneArticoli</result>
+			</action>
+		
+			<!-- Tramite filtro -->
+			<action name="ricercaArticoli" class="it.store.action.area_operatore.RicercaArticoliAction">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				<result name="*" type="tiles">gestioneArticoli</result>
+			</action>
+	
+	
+</package>
+
+</struts>

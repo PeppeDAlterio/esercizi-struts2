@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<!-- 
+	Area relativa alla gestione degli account dei clienti.
+	È necessario effettuare il login per accedere a quest'area del sito. 
+-->
+
+<package name="areacliente" namespace="/areacliente" extends="tiles">
+
+	<interceptors>
+		<interceptor name="checkLoginInterceptor" class="it.store.interceptor.CheckLoginInterceptor" />
+		
+		<interceptor-stack name="checkLoginStack">
+			<interceptor-ref name="checkLoginInterceptor" />
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+	</interceptors>
+	
+	<default-interceptor-ref name="checkLoginStack"/>
+
+	<!-- Gestione ordini -->
+		<!-- Lista ordini -->
+		<action name="gestioneOrdini">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">gestioneOrdini</result>
+		</action>
+	
+		<!-- Dettagli ordine -->
+		<action name="visualizzaOrdine">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">dettagliOrdine</result>
+		</action>
+	
+</package>
+
+</struts>

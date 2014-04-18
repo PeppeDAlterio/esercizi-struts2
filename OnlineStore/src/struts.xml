@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<constant name="struts.custom.i18n.resources" value="it.resources.properties.misc, it.resources.properties.form, 
+														 it.resources.properties.view, it.resources.properties.messaggi, 
+														 it.resources.properties.errori" />
+	
+	<constant name="struts.devMode" value="true" /> 
+
+
+<!-- Tiles -->
+<package name="tiles" extends="struts-default">
+	<result-types>
+		<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+	</result-types>
+</package>
+
+<!--
+	Default package:
+	Homepage, ricerca articoli e messaggi d'errore.
+	
+	namespace: / 
+ -->
+<package name="default" namespace="/" extends="tiles">
+	<!-- Homepage -->
+	<action name="">
+		<result type="tiles">home</result>
+	</action>
+
+	<action name="home">
+		<result type="tiles">home</result>
+	</action>
+	
+	<!-- Cerca -->
+	
+	
+	<!-- Messaggi d'errore -->
+		<!-- 403 -->
+		<action name="403">
+			<result type="tiles">403</result>
+		</action>
+		
+		<!-- 404 -->
+		<action name="404">
+			<result type="tiles">404</result>
+		</action>
+			
+</package>
+
+<!--
+	Catalogo del sito: categorie e schede articoli
+	namespace: /catalogo 
+ -->
+<include file="catalogo.xml" />
+
+<!--
+	Area dedicata alla gestione degli ordini: carrello, cassa e feedback
+	namespace: /ordine 
+ -->
+<include file="ordine.xml" />
+
+<!-- 
+	Utente: area dedicata a tutti gli utenti del sito
+	namespace: /utente 
+-->
+<include file="utente.xml" />
+
+<!--
+	Account: area dedicata a tutti gli utenti (che hanno effettuato l'accesso) del sito
+	namespace: /account 
+-->
+<include file="account.xml" />
+
+<!-- 
+	Area clienti: area dedicata agli account di tipo clienti e superiori
+	namespace: /areacliente
+-->
+<include file="area_cliente.xml" />
+
+<!--
+	Area operatore: Area dedicata agli account di tipo operatore e superiori
+	namespace: /areaoperatore 
+ -->
+<include file="area_operatore.xml" />
+
+<!--
+	Area amministratore: Area dedicata agli account di tipo amministratore (e superiori)
+	namespace: /admin
+ -->
+<include file="area_admin.xml" />
+
+</struts>

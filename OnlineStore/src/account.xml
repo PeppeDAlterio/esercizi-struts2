@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<!-- 
+	Area comune a tutti gli account (login needed)
+-->
+
+<package name="account" namespace="/account" extends="tiles">
+
+
+	<interceptors>
+		<interceptor name="checkLoginInterceptor" class="it.store.interceptor.CheckLoginInterceptor" />
+		
+		<interceptor-stack name="checkLoginStack">
+			<interceptor-ref name="checkLoginInterceptor" />
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+	</interceptors>
+	
+	<default-interceptor-ref name="checkLoginStack"/>
+
+
+<!-- Pannello di controllo utente -->
+	<action name="pannelloControlloAccount">
+		<result name="login" type="tiles">loginForm</result>
+		
+		
+		<result name="*" type="tiles">pannelloControlloAccount</result>
+	</action>
+	
+<!-- Modifica profilo -->
+	<!-- Form -->
+	<action name="modificaProfiloForm">
+		<result name="login" type="tiles">loginForm</result>
+		
+		
+		<result name="*" type="tiles">modificaProfiloForm</result>
+	</action>
+	<!-- Action -->
+	<action name="modificaProfilo" class="it.store.action.utente.SignupAction" method="modificaProfilo">
+		<result name="login" type="tiles">loginForm</result>
+		
+	
+		<result name="*" type="tiles">modificaProfiloForm</result>
+	</action>
+	
+<!-- Modifica password -->
+	<!-- Form -->
+	<action name="modificaPasswordForm">
+		<result name="login" type="tiles">loginForm</result>
+		
+		
+		<result name="*" type="tiles">modificaPasswordForm</result>
+	</action>
+	<!-- Action -->
+	<action name="modificaPassword" class="it.store.action.account.ModificaPasswordAction">
+		<result name="login" type="tiles">loginForm</result>
+		
+		
+		<result name="success" type="tiles">loginForm</result>
+		
+		<result name="*" type="tiles">modificaPasswordForm</result>
+	</action>
+	
+<!-- Rubrica utente -->
+	<!-- Aggiungi indirizzi -->
+		<!-- Form -->
+		<action name="aggiungiIndirizzoForm">
+			<result name="login" type="tiles">loginForm</result>
+			
+						
+			<result name="*" type="tiles">aggiornaRubrica</result>
+		</action>
+		
+		<!-- Action -->
+		<action name="aggiungiIndirizzo" class="it.store.action.account.rubrica.AggiungiIndirizzoAction" method="aggiungiIndirizzo">
+			<result name="login" type="tiles">loginForm</result>
+			
+			
+			<result name="success" type="tiles">rubricaUtente</result>
+			
+			<result name="*" type="tiles">aggiornaRubrica</result>
+		</action>
+		
+	<!-- Modifica indirizzi -->
+		<!-- Form -->
+		<action name="modificaIndirizzoForm">		
+			<result name="login" type="tiles">loginForm</result>
+			
+						
+			<result name="success" type="tiles">aggiornaRubrica</result>
+			
+			<result name="*" type="tiles">rubricaUtente</result>
+		</action>
+		
+	<!-- Rimozione indirizzi -->
+	<action name="rimuoviIndirizzo" class="it.store.action.account.rubrica.RimuoviIndirizzoAction">
+		<result name="login" type="tiles">loginForm</result>
+		
+		
+		<result name="*" type="tiles">rubricaUtente</result>
+	</action>
+		
+	<!-- Gestione rubrica -->
+	<action name="rubricaUtente">
+		<result name="login" type="tiles">loginForm</result>
+		
+		<result name="*" type="tiles">rubricaUtente</result>
+	</action>
+	
+	<!-- Logout -->
+		<!-- Logout action -->
+		<action name="logout" class="it.store.action.utente.LoginAction" method="logout">
+			<result name="*" type="tiles">loginForm</result>
+		</action>
+
+		
+</package>
+
+</struts>
