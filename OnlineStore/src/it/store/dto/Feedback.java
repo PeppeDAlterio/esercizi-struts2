@@ -6,7 +6,7 @@ public class Feedback {
 				   messaggio,
 				   approvato_da;
 	
-	private int ordine_id,
+	private int id_ordine,
 				punteggio,
 				stato; /*
 						*	-2: NON RILASCIATO
@@ -39,12 +39,12 @@ public class Feedback {
 		this.approvato_da = approvato_da;
 	}
 
-	public int getOrdine_id() {
-		return ordine_id;
+	public int getId_ordine() {
+		return id_ordine;
 	}
 
-	public void setOrdine_id(int ordine_id) {
-		this.ordine_id = ordine_id;
+	public void setId_ordine(int ordine_id) {
+		this.id_ordine = ordine_id;
 	}
 
 	public int getPunteggio() {

@@ -41,7 +41,7 @@ public class FeedbackService extends DatabaseService {
 	
 	private void riempi_feedback(Feedback fb, ResultSet result) throws SQLException {
 		fb.setUtente_email(result.getString("Utente_email"));
-		fb.setOrdine_id(result.getInt("Ordine_id"));
+		fb.setId_ordine(result.getInt("Ordine_id"));
 		fb.setPunteggio(result.getInt("punteggio"));
 		fb.setMessaggio(result.getString("messaggio"));
 		fb.setStato(result.getInt("stato"));
