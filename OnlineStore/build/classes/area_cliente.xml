@@ -81,6 +81,20 @@
 					
 					<result name="*" type="tiles">modificaIndirizzoOrdine</result>
 				</action>
+				
+	<!-- Gestione feedback -->
+		<!-- Lista feedback -->
+		<action name="gestioneFeedback" class="it.store.action.area_cliente.GestioneFeedbackAction">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">gestioneFeedback</result>
+		</action>
 	
 </package>
 

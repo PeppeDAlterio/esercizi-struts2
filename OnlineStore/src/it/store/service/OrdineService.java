@@ -108,6 +108,15 @@ public class OrdineService extends DatabaseService {
 		
 		statement.close();
 		
+		//aggiungo un recordo per il rilascio del feedback
+		query = "INSERT INTO Feedback_ordine VALUES(?, ?, NULL, NULL, -2, NULL)";
+		statement = conn.prepareStatement(query);
+		statement.setString(1, ordine.getUtente_email());
+		statement.setInt(2, id);
+		statement.executeUpdate();
+		
+		statement.close();
+		
 		//ritorno in output l'id dell'ordine
 		
 		return id;
@@ -134,7 +143,7 @@ public class OrdineService extends DatabaseService {
 	public List<Ordine> getOrdiniCliente(String utente, int page) throws SQLException, ClassNotFoundException {
 		List<Ordine> listaOrdini = new ArrayList<Ordine>();
 		
-		String query = "SELECT * FROM Ordine WHERE Utente_email=? LIMIT ?, 5";
+		String query = "SELECT * FROM Ordine WHERE Utente_email=? ORDER BY data DESC LIMIT ?, 5";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, utente);
 		statement.setInt(2, page*5);

@@ -166,6 +166,13 @@
 				<put-attribute name="title" value="Modifica indirizzo ordine" />
 				<put-attribute name="body" value="/pages/area_clienti/forms/modifica_indirizzo_ordine.jsp" />
 			</definition>
+			
+	<!-- Gestione feedback -->
+		<!-- Lista feedback -->
+		<definition name="gestioneFeedback" extends="azione">
+			<put-attribute name="title" value="Gestione feedback" />
+			<put-attribute name="body" value="/pages/area_clienti/views/gestione_feedback.jsp" />
+		</definition>
 
 <!-- FINE Area clienti -->
 
