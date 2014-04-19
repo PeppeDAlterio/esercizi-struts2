@@ -1,10 +1,10 @@
-OnlineStore - Struts2
+Esercizi Java EE Struts2
 ===================
 
-Esercizio Struts2: Online Store
+Esercizi Java EE utilizzando il frameworks Struts2
 
-Obiettivo:
-Si vuole sviluppare, utilizzando Struts2, un'applicazione web per la gestione di uno store online.
+Lista applicazioni:
+* Online Store
 
 ===
 Giuseppe D'Alterio
