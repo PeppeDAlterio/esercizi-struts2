@@ -21,7 +21,9 @@
 				</s:a>
 			</li>
 			<li>
-				<s:text name="pcView.storico_rilascio_feedback" />
+				<s:a action="gestioneFeedback" namespace="/areacliente">
+					<s:text name="pcView.storico_rilascio_feedback" />
+				</s:a>
 			</li>
 		</ul>
 		
