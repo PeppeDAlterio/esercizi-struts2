@@ -32,7 +32,7 @@
 					</s:a>
 				</td>
 				<td style="text-align: center;" colspan="3">
-					<s:a action="rilasciaFeedback" namespace="/areacliente">
+					<s:a action="rilasciaFeedbackForm" namespace="/areacliente">
 					
 						<s:param name="id_ordine" value="#feedback.ordine_id" />
 					

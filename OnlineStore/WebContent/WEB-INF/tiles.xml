@@ -173,6 +173,12 @@
 			<put-attribute name="title" value="Gestione feedback" />
 			<put-attribute name="body" value="/pages/area_clienti/views/gestione_feedback.jsp" />
 		</definition>
+		
+		<!-- Rilascio feedback -->
+		<definition name="rilascioFeedback" extends="azione">
+			<put-attribute name="title" value="Rilascio feedback" />
+			<put-attribute name="body" value="/pages/area_clienti/forms/rilascio_feedback.jsp" />
+		</definition>
 
 <!-- FINE Area clienti -->
 

@@ -95,6 +95,21 @@
 			
 			<result name="*" type="tiles">gestioneFeedback</result>
 		</action>
+		
+		<!-- Rilascia feedback -->
+			<!-- Form -->
+			<action name="rilasciaFeedbackForm">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				<result name="error" type="tiles">gestioneFeedback</result>
+				
+				<result name="*" type="tiles">rilascioFeedback</result>
+			</action>
 	
 </package>
 
