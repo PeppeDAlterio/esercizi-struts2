@@ -41,28 +41,36 @@
 			<s:text name="listaFbView.rilascia_fb" />
 		</td>
 	</tr>
-		
-	<s:iterator value="#request.listaFeedback" var="feedback">
-		<s:if test="%{#feedback.stato==-2}"> <%-- SOLO FEEDBACK NON RILASCATI (STATO=-2) --%>
-			<tr class="risultati">
-				<td style="text-align: center;">
-					<s:a action="visualizzaOrdine" namespace="/areacliente" target="_blank">
-						<s:param name="id_ordine" value="#feedback.ordine_id" />
+	<s:if test="%{#request.listaFeedback!=null}">
+		<s:iterator value="#request.listaFeedback" var="feedback">
+			<s:if test="%{#feedback.stato==-2}"> <%-- SOLO FEEDBACK NON RILASCATI (STATO=-2) --%>
+				<tr class="risultati">
+					<td style="text-align: center;">
+						<s:a action="visualizzaOrdine" namespace="/areacliente" target="_blank">
+							<s:param name="id_ordine" value="#feedback.id_ordine" />
+							
+							<s:property value="#feedback.id_ordine" />
+						</s:a>
+					</td>
+					<td style="text-align: center;" colspan="3">
+						<s:a action="rilasciaFeedbackForm" namespace="/areacliente">
 						
-						<s:property value="#feedback.ordine_id" />
-					</s:a>
-				</td>
-				<td style="text-align: center;" colspan="3">
-					<s:a action="rilasciaFeedbackForm" namespace="/areacliente">
-					
-						<s:param name="id_ordine" value="#feedback.ordine_id" />
-					
-						<s:text name="listaFbView.rilascia_fb" />
-					</s:a>
-				</td>
-			</tr>
-		</s:if>
-	</s:iterator>
+							<s:param name="id_ordine" value="#feedback.id_ordine" />
+						
+							<s:text name="listaFbView.rilascia_fb" />
+						</s:a>
+					</td>
+				</tr>
+			</s:if>
+		</s:iterator>
+	</s:if>
+	<s:else>
+		<tr class="commonTr">
+			<td class="commonTd">
+				<s:text name="ricerca.nessun_risultato" />
+			</td>
+		</tr>
+	</s:else>
 	
 	<tr class="commonTr">
 		<th class="commonTh" colspan="4">
@@ -85,27 +93,36 @@
 		</td>
 	</tr>
 	
-	<s:iterator value="#request.listaFeedback" var="feedback">
-		<s:if test="%{#feedback.stato>-2}"> <%-- SOLO FEEDBACK RILASCATI (STATO>-2) --%>
-			<tr class="risultati">
-				<td style="text-align: center;">
-					<s:a action="visualizzaOrdine" namespace="/areacliente" target="_blank">
-						<s:param name="id_ordine" value="#feedback.ordine_id" />
-						
-						<s:property value="#feedback.ordine_id" />
-					</s:a>
-				</td>
-				<td style="text-align: center;">
-					<s:property value="#feedback.punteggio" />
-				</td>
-				<td style="text-align: center;">
-					<s:property value="#feedback.messaggio" />
-				</td>
-				<td style="text-align: center;">
-					<s:text name="feedback.%{#feedback.stato}" />
-				</td>
-			</tr>
-		</s:if>
-	</s:iterator>
+	<s:if test="%{#request.listaFeedback!=null}">
+		<s:iterator value="#request.listaFeedback" var="feedback">
+			<s:if test="%{#feedback.stato>-2}"> <%-- SOLO FEEDBACK RILASCATI (STATO>-2) --%>
+				<tr class="risultati">
+					<td style="text-align: center;">
+						<s:a action="visualizzaOrdine" namespace="/areacliente" target="_blank">
+							<s:param name="id_ordine" value="#feedback.id_ordine" />
+							
+							<s:property value="#feedback.id_ordine" />
+						</s:a>
+					</td>
+					<td style="text-align: center;">
+						<s:property value="#feedback.punteggio" />
+					</td>
+					<td style="text-align: center;">
+						<s:property value="#feedback.messaggio" />
+					</td>
+					<td style="text-align: center;">
+						<s:text name="feedback.%{#feedback.stato}" />
+					</td>
+				</tr>
+			</s:if>
+		</s:iterator>
+	</s:if>
+	<s:else>
+		<tr class="commonTr">
+			<td class="commonTd">
+				<s:text name="ricerca.nessun_risultato" />
+			</td>
+		</tr>
+	</s:else>
 	
 </table>

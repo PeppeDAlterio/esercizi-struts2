@@ -47,5 +47,27 @@ public class FeedbackService extends DatabaseService {
 		fb.setStato(result.getInt("stato"));
 		fb.setApprovato_da(result.getString("approvato_da"));
 	}
+	
+	/*
+	 * @return: false=ok | true=errore: ordine non trovato?
+	 */
+	public boolean inserisciFeedback(Feedback feedback, String utente) throws SQLException {
+		
+		String query = "UPDATE Feedback_ordine SET punteggio=?, messaggio=?, stato=-1 WHERE Utente_email=? AND Ordine_id=? AND stato=-2";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, feedback.getPunteggio());
+		statement.setString(2, feedback.getMessaggio());
+		statement.setString(3, utente);
+		statement.setInt(4, feedback.getId_ordine());
+		int righe = statement.executeUpdate();
+		
+		statement.close();
+		
+		if(righe==0) {
+			return true;
+		}
+		
+		return false;
+	}
 
 }

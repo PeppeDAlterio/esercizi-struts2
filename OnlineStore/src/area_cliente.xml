@@ -124,7 +124,10 @@
 				
 				<result name="input" type="tiles">rilascioFeedback</result>
 				
-				<result name="*" type="tiles">gestioneFeedback</result>
+				<result name="*" type="redirectAction">
+					<param name="actionName">gestioneFeedback</param>
+					<param name="namespace">/areacliente</param>
+				</result>
 			</action>
 	
 </package>

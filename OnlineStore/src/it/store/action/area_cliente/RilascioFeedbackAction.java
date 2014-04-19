@@ -2,8 +2,6 @@ package it.store.action.area_cliente;
 
 import java.sql.SQLException;
 
-import org.apache.commons.lang3.StringUtils;
-
 import it.store.dto.Feedback;
 import it.store.dto.User;
 import it.store.service.FeedbackService;
@@ -29,7 +27,7 @@ public class RilascioFeedbackAction extends ActionSupport implements ModelDriven
 			addActionError("errore.ordine.non_trovato");
 			return ERROR;
 		}
-		//TODO: completami
+		
 		ActionContext context = ActionContext.getContext();
 		User userData = (User)context.getSession().get("userData");
 		
@@ -37,10 +35,12 @@ public class RilascioFeedbackAction extends ActionSupport implements ModelDriven
 			return LOGIN;
 		}
 		
+		boolean errore = false; //false=ok | true=errore
+		
 		FeedbackService feedbackService;
 		try {
 			feedbackService = new FeedbackService();
-			//feedbackService.inserisciFeedback(feedback, utente);
+			errore = feedbackService.inserisciFeedback(feedback, userData.email);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			addActionError(getText("errori.generico"));
@@ -49,8 +49,18 @@ public class RilascioFeedbackAction extends ActionSupport implements ModelDriven
 			addActionError(getText("sql.generic"));
 		} finally {
 			feedbackService = null;
+			
+			if(hasErrors()) {
+				return INPUT;
+			}
 		}
 		
+		if(errore) {
+			addActionError(getText("errore.ordine.non_trovato"));
+			return ERROR;
+		}
+		
+		addActionMessage(getText("feedback.success"));
 		return SUCCESS;
 	}
 
