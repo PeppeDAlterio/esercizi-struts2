@@ -15,9 +15,9 @@ public class AccountService extends DatabaseService {
 	/*
 	 * Metodo per inserire nel database un nuovo utente
 	 */
-	public int nuovoCliente(User userData) throws SQLException {
+	public int nuovoAccount(User userData) throws SQLException {
 //TODO: Controlla funzionamento
-		String query = "INSERT INTO Utente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
+		String query = "INSERT INTO Utente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, userData.email);
 		statement.setString(2, userData.userId);
@@ -28,11 +28,13 @@ public class AccountService extends DatabaseService {
 		statement.setString(7, userData.telefono_fisso);
 		statement.setString(8, userData.telefono_mobile);
 		statement.setString(9, userData.email_secondaria);
+		statement.setInt(10, userData.getTipo());
 		int error = statement.executeUpdate();
 		statement.close();
 		
 		return error;
 	}
+	
 	
 	/*
 	 * Metodo per effettuare il login

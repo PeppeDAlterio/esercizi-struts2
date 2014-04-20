@@ -185,32 +185,46 @@
 <!--  -->
 
 <!-- INIZIO Area operatore -->
+	<!-- Pannello di controllo sito -->
 	<definition name="pannelloControlloSito" extends="azione">
 		<put-attribute name="title" value="Pannello di controllo" />
 		<put-attribute name="body" value="/pages/area_operatore/views/pannello_di_controllo_sito.jsp" />
 	</definition>
 	
-	<definition name="gestioneArticoli" extends="azione">
-		<put-attribute name="title" value="Gestione articoli" />
-		<put-attribute name="body" value="/pages/area_operatore/views/gestione_articoli.jsp" />
-	</definition>
-	
-	<definition name="nuovoArticoloForm" extends="azione">
-		<put-attribute name="title" value="Nuovo articolo" />
-		<put-attribute name="body" value="/pages/area_operatore/forms/nuovo_articolo.jsp" />
-	</definition>
+	<!-- Gestione articoli -->
+		<!-- Gestione -->
+		<definition name="gestioneArticoli" extends="azione">
+			<put-attribute name="title" value="Gestione articoli" />
+			<put-attribute name="body" value="/pages/area_operatore/views/gestione_articoli.jsp" />
+		</definition>
+		
+		<!-- Nuovo articolo -->
+		<definition name="nuovoArticoloForm" extends="azione">
+			<put-attribute name="title" value="Nuovo articolo" />
+			<put-attribute name="body" value="/pages/area_operatore/forms/nuovo_articolo.jsp" />
+		</definition>
 <!-- FINE Area operatore -->
 
 <!-- INIZIO Area amministratore -->
-	<definition name="gestioneCategorie" extends="azione">
-		<put-attribute name="title" value="Gestione categorie" />
-		<put-attribute name="body" value="/pages/area_admin/views/gestione_categorie.jsp" />
-	</definition>
+	<!-- Gestione categorie -->
+		<!-- Gestione -->
+		<definition name="gestioneCategorie" extends="azione">
+			<put-attribute name="title" value="Gestione categorie" />
+			<put-attribute name="body" value="/pages/area_admin/views/gestione_categorie.jsp" />
+		</definition>
+		
+		<!-- Modifica categorie -->
+		<definition name="modificaCategoria" extends="azione">
+			<put-attribute name="title" value="Modifica categoria" />
+			<put-attribute name="body" value="/pages/area_admin/forms/modifica_categoria.jsp" />
+		</definition>
 	
-	<definition name="modificaCategoria" extends="azione">
-		<put-attribute name="title" value="Modifica categoria" />
-		<put-attribute name="body" value="/pages/area_admin/forms/modifica_categoria.jsp" />
-	</definition>
+	<!-- Gestione account -->
+		<!-- Nuovo account -->
+		<definition name="creaAccountForm" extends="azione">
+			<put-attribute name="title" value="Crea account" />
+			<put-attribute name="body" value="/pages/area_admin/forms/crea_account.jsp" />
+		</definition>
 <!-- FINE Area amministratore -->
 
 <!-- INIZIO messaggi d'errore -->

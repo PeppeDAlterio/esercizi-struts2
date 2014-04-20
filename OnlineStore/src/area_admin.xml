@@ -22,68 +22,83 @@
 	
 	<default-interceptor-ref name="checkLoginStack"/>
 
-<!-- Gestione catalogo -->
-	<!-- Gestione categorie -->
-		<!-- View -->
-		<action name="gestioneCategorie">
-			<result name="login" type="tiles">loginForm</result>
-			
-			<result name="access_denied" type="redirectAction">
-				<param name="actionName">403</param>
-				<param name="namespace">/</param>
-			</result>
-			
-			
-			<result name="*" type="tiles">gestioneCategorie</result>
-		</action>
-		
-		<!-- Aggiungi categoria -->
-			<!-- Action -->
-			<action name="aggiungiCategoria" class="it.store.action.area_admin.AggiungiCategoriaAction" method="aggiungiCategoria">
+	<!-- Gestione catalogo -->
+		<!-- Gestione categorie -->
+			<!-- View -->
+			<action name="gestioneCategorie">
 				<result name="login" type="tiles">loginForm</result>
-			
+				
 				<result name="access_denied" type="redirectAction">
 					<param name="actionName">403</param>
 					<param name="namespace">/</param>
 				</result>
+				
 				
 				<result name="*" type="tiles">gestioneCategorie</result>
 			</action>
 			
-		<!-- Modifica categoria -->
-			<!-- Form -->
-			<action name="modificaCategoriaForm">
-				<result name="login" type="tiles">loginForm</result>
-			
-				<result name="access_denied" type="redirectAction">
-					<param name="actionName">403</param>
-					<param name="namespace">/</param>
-				</result>
-				
-				
-				<result name="*" type="tiles">modificaCategoria</result>
-			</action>
-			
-			<!-- Action -->
-			<action name="modificaCategoria" class="it.store.action.area_admin.ModificaCategoriaAction">
+			<!-- Aggiungi categoria -->
+				<!-- Action -->
+				<action name="aggiungiCategoria" class="it.store.action.area_admin.AggiungiCategoriaAction" method="aggiungiCategoria">
 					<result name="login" type="tiles">loginForm</result>
+				
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+					
+					<result name="*" type="tiles">gestioneCategorie</result>
+				</action>
+				
+			<!-- Modifica categoria -->
+				<!-- Form -->
+				<action name="modificaCategoriaForm">
+					<result name="login" type="tiles">loginForm</result>
+				
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+					
+					
+					<result name="*" type="tiles">modificaCategoria</result>
+				</action>
+				
+				<!-- Action -->
+				<action name="modificaCategoria" class="it.store.action.area_admin.ModificaCategoriaAction">
+						<result name="login" type="tiles">loginForm</result>
+				
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+					
+					
+					<result name="success" type="tiles">gestioneCategorie</result>
+					
+					<result name="*" type="tiles">modificaCategoria</result>
+				</action>
+				
+			<!-- Rimuovi categoria -->
+				<!-- Action -->
+				<action name="rimuoviCategoria" class="it.store.action.area_admin.AggiungiCategoriaAction" method="rimuoviCategoria">
+					<param name="rimuovi" />
+					
+					<result name="login" type="tiles">loginForm</result>
+				
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+					
+					
+					<result name="*" type="tiles">gestioneCategorie</result>			
+				</action>
 			
-				<result name="access_denied" type="redirectAction">
-					<param name="actionName">403</param>
-					<param name="namespace">/</param>
-				</result>
-				
-				
-				<result name="success" type="tiles">gestioneCategorie</result>
-				
-				<result name="*" type="tiles">modificaCategoria</result>
-			</action>
-			
-		<!-- Rimuovi categoria -->
-			<!-- Action -->
-			<action name="rimuoviCategoria" class="it.store.action.area_admin.AggiungiCategoriaAction" method="rimuoviCategoria">
-				<param name="rimuovi" />
-				
+	<!-- Gestione account -->
+		<!-- Creazione nuovo account -->
+			<!-- Form -->
+			<action name="creaAccountForm" class="it.store.action.area_admin.CreaAccountFormAction">
 				<result name="login" type="tiles">loginForm</result>
 			
 				<result name="access_denied" type="redirectAction">
@@ -91,8 +106,19 @@
 					<param name="namespace">/</param>
 				</result>
 				
+				<result name="*" type="tiles">creaAccountForm</result>
+			</action>
+			
+			<!-- Action -->
+			<action name="creaAccount" class="it.store.action.area_admin.CreaAccountAction">
+				<result name="login" type="tiles">loginForm</result>
+			
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
 				
-				<result name="*" type="tiles">gestioneCategorie</result>			
+				<result name="*" type="tiles">creaAccountForm</result>
 			</action>
 						
 </package>
