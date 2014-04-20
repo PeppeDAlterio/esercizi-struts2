@@ -13,7 +13,7 @@
 
 <table class="commonTable" style="width: 80%;">
 	<tr class="commonTr">
-		<th class="commonTh" colspan="2"><s:property value="getText('signupForm.titolo')" /> *TODO*<!-- TODO: nome tipo account --></th>
+		<th class="commonTh" colspan="2"><s:property value="getText('signupForm.titolo')" />&nbsp;<s:text name="Cliente" /></th>
 	</tr>
 	
 	<tr class="commonTr">

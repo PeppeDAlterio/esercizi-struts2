@@ -26,35 +26,35 @@ public class SignupAction extends ActionSupport implements ModelDriven<User> {
 	public List<String> psw = null;
 			
 	public void validate() {
-		/* controllo che, in caso di registrazione, le due password siano uguali e che siano state inserite */
+		/* controllo che le due password siano uguali e che siano state inserite */
 		if (psw!=null) {
 			if(psw.get(0).equals(psw.get(1))) {
 				userData.setPassword(psw.get(0));
 			} else {
-				addFieldError("psw", "Le password non combaciano");
+				addFieldError("psw", getText("errori.user.psw.diverse"));
 			}
 		}
 		
 		/* controllo che non vi siano campi vuoti */
 		if(StringUtils.isBlank(userData.email)) {
-			addFieldError("email", "Campo obbligatorio!");
+			addFieldError("email", getText("fieldError.campo_vuoto"));
 		}
 		if(StringUtils.isBlank(userData.userId)) {
-			addFieldError("userId", "Campo obbligatorio!");
+			addFieldError("userId", getText("fieldError.campo_vuoto"));
 		}
 		if(StringUtils.isBlank(userData.getPassword())) {
-			addFieldError("password", "Campo obbligatorio!");
+			addFieldError("password", getText("fieldError.campo_vuoto"));
 		}
 		if(StringUtils.isBlank(userData.nome)) {
-			addFieldError("nome", "Campo obbligatorio!");
+			addFieldError("nome", getText("fieldError.campo_vuoto"));
 		}
 		if(StringUtils.isBlank(userData.cognome)) {
-			addFieldError("cognome", "Campo obbligatorio!");
+			addFieldError("cognome", getText("fieldError.campo_vuoto"));
 		}
 		if(StringUtils.isBlank(userData.getCodice_fiscale())) {
-			addFieldError("codice_fiscale", "Campo obbligatorio!");
+			addFieldError("codice_fiscale", getText("fieldError.campo_vuoto"));
 		} else if(userData.getCodice_fiscale().length()!=16) {
-			addFieldError("codice_fiscale", "Formato errato");
+			addFieldError("codice_fiscale", getText("fieldError.formato_errato"));
 		}
 		
 		if(hasFieldErrors()) {
@@ -63,12 +63,12 @@ public class SignupAction extends ActionSupport implements ModelDriven<User> {
 
 		/* controllo validità email primaria ed eventuale email secondaria */
 		if( !(userData.email.indexOf("@")>0 && userData.email.lastIndexOf(".")-userData.email.indexOf("@")>1) ) {
-			addFieldError("email", "Formato email errato!");
+			addFieldError("email", getText("fieldError.formato_errato"));
 		}
 		if(!StringUtils.isBlank(userData.email_secondaria)) {
 			if( !(userData.email_secondaria.indexOf("@")>0 && 
 					userData.email_secondaria.lastIndexOf(".")-userData.email_secondaria.indexOf("@")>1 ) ) {
-				addFieldError("email_secondaria", "Formato email errato!");
+				addFieldError("email_secondaria", getText("fieldError.formato_errato"));
 			}
 		} else {
 			userData.email_secondaria = null;
@@ -77,14 +77,14 @@ public class SignupAction extends ActionSupport implements ModelDriven<User> {
 		/* controllo la validità dei numeri di telefono */
 		if(!StringUtils.isBlank(userData.telefono_fisso)) {
 			if( !(StringUtils.isNumeric(userData.telefono_fisso) && userData.telefono_fisso.length()>9) ) {
-				addFieldError("telefono_fisso", "Formato numero errato!");
+				addFieldError("telefono_fisso", getText("fieldError.formato_errato"));
 			}
 		} else {
 			userData.telefono_fisso = null;
 		}
 		if(!StringUtils.isBlank(userData.telefono_mobile)) {
 			if( !(StringUtils.isNumeric(userData.telefono_mobile) && userData.telefono_mobile.length()>9) ) {
-				addFieldError("telefono_mobile", "Formato numero errato!");
+				addFieldError("telefono_mobile", getText("fieldError.formato_errato"));
 			}
 		} else {
 			userData.telefono_mobile = null;
@@ -93,27 +93,23 @@ public class SignupAction extends ActionSupport implements ModelDriven<User> {
 	}
 	
 	public String nuovoCliente() {
-						
+		
+		//tipo = cliente
+		userData.setTipo(1);
+		
 		AccountService accountService;
 		try {
 			accountService = new AccountService();
-			if(accountService.nuovoCliente(userData)!=1) {
-				addActionError("Si e' verificato un errore.<br>"
-								+ "Riprovare.");
+			if(accountService.nuovoAccount(userData)!=1) {
+				addActionError(getText("errori.generico"));
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			addActionError("Si e' verificato un errore.<br>"
-							+ "Riprovare.");
+			addActionError(getText("errori.generico"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-			if(e.getErrorCode()==1644) {
-				addActionError("Si e' verificato un errore:<br>"
-								+ e.getMessage());
-			} else {
-				/* messaggi di errore per 'duplicate' (email già in uso, userId già in uso,...) */
-				controllo_duplicati(e.getMessage());
-			}
+			/* messaggi di errore per 'duplicate' (email già in uso, userId già in uso,...) */
+			controllo_duplicati(e.getMessage());
 		} finally {
 			accountService = null;
 			if(hasActionErrors()) {
@@ -121,33 +117,25 @@ public class SignupAction extends ActionSupport implements ModelDriven<User> {
 			}
 		}
 		
-		addActionMessage("L'account e' stato creato correttamente!<br>"
-							+ "Utilizza i tuoi nuovi dati per effettuare l'accesso.");
+		addActionMessage(getText("signupForm.msg.signup_success"));
 		return SUCCESS;
 	}
 	
 	public String modificaProfilo() {
-		System.out.println("omg");
+
 		AccountService accountService;
 		try {
 			accountService = new AccountService();
 			if(accountService.modificaProfilo(userData)==0) {
-				addActionError("Si e' verificato un errore.<br>"
-								+ "Riprovare.");
+				addActionError(getText("errori.generico"));
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			addActionError("Si e' verificato un errore.<br>"
-							+ "Riprovare.");
+			addActionError(getText("errori.generico"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-			if(e.getErrorCode()==1644) {
-				addActionError("Si e' verificato un errore:<br>"
-								+ e.getMessage());
-			} else {
 				/* messaggi di errore per 'duplicate' (email già in uso, userId già in uso,...) */
 				controllo_duplicati(e.getMessage());
-			}
 		} finally {
 			accountService = null;
 			
@@ -160,7 +148,7 @@ public class SignupAction extends ActionSupport implements ModelDriven<User> {
 		ActionContext context = ActionContext.getContext();
 		context.getSession().put("userData", userData);
 		
-		addActionMessage("Profilo modificato con successo.");
+		addActionMessage(getText("signupForm.msg.modifica_success"));
 		
 		return SUCCESS;
 	}
@@ -173,24 +161,19 @@ public class SignupAction extends ActionSupport implements ModelDriven<User> {
 	private void controllo_duplicati(String errore) {
 		if(errore.contains("Duplicate")) {
 			if(errore.contains("PRIMARY")) {
-				addActionError("E-mail gia' in uso da un altro utente!");
-				addFieldError("email", "Email gia' in uso");
+				addActionError(getText("errori.user.email_in_uso"));
+				addFieldError("email", getText("errori.user.email_in_uso"));
 			}
 			else if (errore.contains("userid")) {
-				addActionError("Username gia' in uso da un altro utente!");
-				addFieldError("userId", "Username gia' in uso");
+				addActionError(getText("errori.user.userid_in_uso"));
+				addFieldError("userId", getText("errori.user.userid_in_uso"));
 			}
 			else if (errore.contains("codice_fiscale")) {
-				addActionError("Codice fiscale gia' in uso da un altro utente!");
-				addFieldError("codice_fiscale", "Codice fiscale gia' in uso");
-			}
-			else if (errore.contains("email")) {
-				addActionError("E-mail secondaria gia' in uso da un altro utente!");
-				addFieldError("email_secondaria", "E-mail gia' in uso");
+				addActionError(getText("errori.user.cf_in_uso"));
+				addFieldError("codice_fiscale", getText("errori.user.cf_in_uso"));
 			}
 		} else {
-			addActionError("Si e' verficato un errore.<br>"
-							+ "Ricontrollare i dati inseriti");
+			addActionError(getText("sql.generic"));
 		}
 	}
 	

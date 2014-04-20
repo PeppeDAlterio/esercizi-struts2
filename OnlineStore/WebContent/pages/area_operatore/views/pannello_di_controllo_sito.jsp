@@ -54,7 +54,11 @@
 			<li><s:property value="getText('pcView.ges_account')" /></li>
 			<s:if test="%{#session.userData.tipo>2}">
 				<!-- ADMIN+ -->
-				<li><s:property value="getText('pcView.crea_account')" /></li>
+				<li>
+					<s:a action="creaAccountForm" namespace="/admin">
+						<s:property value="getText('pcView.crea_account')" />
+					</s:a>
+				</li>
 			</s:if>
 			</ul>
 		</td>
