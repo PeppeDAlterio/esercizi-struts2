@@ -1,6 +1,7 @@
 package it.store.action.area_operatore;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import it.store.dto.Ordine;
@@ -15,16 +16,17 @@ public class RicercaOrdiniAction extends ActionSupport implements ModelDriven<Fi
 	
 	private FiltroRicercaOrdini filtro = new FiltroRicercaOrdini();
 	
-	public int page = 0;
+	public int page = 0,
+			   totale_pagine = 0;
 	
-	private List<Ordine> risultati;
+	private List<Ordine> risultati = new ArrayList<Ordine>();
 	
 	public String execute() {
 		
 		OrdineService ordineService;
 		try {
 			ordineService = new OrdineService();
-			this.risultati = ordineService.ricercaOrdini(filtro, page);
+			totale_pagine = ordineService.ricercaOrdini(filtro, page, this.risultati);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			addActionError(getText("errori.generico"));

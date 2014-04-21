@@ -30,7 +30,7 @@ public class Ordine {
 	}
 
 	public void setUtente_email(String utente_email) {
-		Utente_email = utente_email;
+		this.Utente_email = utente_email;
 	}
 
 	public String getData() {

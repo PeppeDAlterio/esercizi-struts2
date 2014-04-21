@@ -302,8 +302,11 @@ public class OrdineService extends DatabaseService {
 		return false;
 	}
 	
-	public List<Ordine> ricercaOrdini(FiltroRicercaOrdini filtro, int p) throws SQLException {
-		List<Ordine> risultati = new ArrayList<Ordine>();
+	
+	/*
+	 * @return: numero pagine
+	 */
+	public int ricercaOrdini(FiltroRicercaOrdini filtro, int p, List<Ordine> risultati) throws SQLException {
 		
 		String query = "SELECT * FROM Ordine WHERE Utente_email LIKE ? AND data LIKE ? AND stato LIKE ? ORDER BY data DESC LIMIT ?, 10";
 		PreparedStatement statement = conn.prepareStatement(query);
@@ -318,13 +321,37 @@ public class OrdineService extends DatabaseService {
 		while(result.next()) {
 			tmp = new Ordine();
 			tmp.setId_ordine(result.getInt("id"));
+			tmp.setUtente_email(result.getString("Utente_email"));
 			tmp.setData(result.getString("data"));
 			tmp.setStato(result.getString("stato"));
 			
 			risultati.add(tmp);
 		}
 		
-		return risultati; 
+		result.close();
+		
+		//leggo lo statement dal precedente
+		String str = statement.toString();
+		query = str.substring(str.indexOf("SELECT"), str.lastIndexOf("ORDER"));
+		
+		//sostituisco il SELECT * con SELECT COUNT(*)
+		query.replace("SELECT *", "SELECT COUNT(*)");
+		
+		statement.close();
+		
+		//leggo numero pagine
+		int totale_pagine=0;
+		statement = conn.prepareStatement(query);
+		result = statement.executeQuery();
+		
+		if(result.next()) { //??
+			totale_pagine = (int) Math.ceil(result.getInt(1)/10.0);
+		}
+		
+		result.close();
+		statement.close();
+		
+		return totale_pagine; 
 	}
 
 }

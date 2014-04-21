@@ -70,11 +70,28 @@
 	
 	<s:if test="%{#request.risultati!=null}">
 		<s:iterator value="#request.risultati" var="ordine">
-			<tr>
+			<tr class="risultati">
 				<td>
+					<s:property value="#ordine.id_ordine" />
+				</td>
+				<td>
+					<s:property value="#ordine.Utente_email" />
+				</td>
+				<td>
+					<s:property value="#ordine.data" />
+				</td>
+				<td>
+					<s:property value="#ordine.stato" />
+				</td>
+				<td>
+					<s:a action="BOH" namespace="/areaoperatore">
+						<s:param name="id_ordine" value="%{#ordine.id_ordine}" />
+					
+						<s:text name="gestioneOrdiniView.gestisci" />
+					</s:a>
 				</td>
 			</tr>
-		</s:iterator>
+		</s:iterator>		
 	</s:if>
 	<s:else>
 		<tr>
@@ -85,3 +102,32 @@
 	</s:else>
 	
 </table>
+
+<%
+	String queryString = request.getQueryString();
+	if(queryString!=null && request.getAttribute("page")!=null) {
+		String pagina = "&page="+request.getAttribute("page").toString();
+		
+		queryString = queryString.replace(pagina, "");
+		
+		request.setAttribute("queryString", queryString);
+	}
+%>
+
+<s:if test="%{#request.queryString != null}">
+	<s:text name="global.pagina" />:&nbsp;
+	<s:iterator begin="1" end="%{#request.totale_pagine}" status="status" >
+		<s:if test="%{#status.index!=#request.page}">
+			<s:a action="ricercaOrdine?%{#request.queryString}" namespace="/areaoperatore">
+				<s:param name="page" value="#status.index" />
+				
+				<s:property value="#status.index+1" />
+			</s:a>
+		</s:if>
+		<s:else>
+			<s:property value="#status.index+1" />
+		</s:else>
+&nbsp;-&nbsp;
+	</s:iterator>
+		
+</s:if>	

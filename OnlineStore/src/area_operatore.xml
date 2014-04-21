@@ -117,7 +117,7 @@
 				</action>
 			
 	<!-- Gestione ordini -->
-		<!-- Ricerca ordini -->
+		<!-- Gestione ordini -->
 		<action name="gestioneOrdini">
 			<result name="login" type="tiles">loginForm</result>
 			
@@ -130,6 +130,18 @@
 			<result name="*" type="tiles">gestioneOrdini</result>
 		</action>
 	
+		<!-- Ricerca ordini -->
+		<action name="ricercaOrdine" class="it.store.action.area_operatore.RicercaOrdiniAction">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+		
+		
+			<result name="*" type="tiles">gestioneOrdini</result>
+		</action>
 	
 </package>
 
