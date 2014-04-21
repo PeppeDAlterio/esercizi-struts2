@@ -4,7 +4,7 @@
 	<s:set var="p" scope="request" value="%{#parameters.page}" />
 </s:if>
 
-<s:bean name="it.store.bean.ordine.ListaOrdiniBean" var="ordiniBean">
+<s:bean name="it.store.bean.ordine.ListaOrdiniUtenteBean" var="ordiniBean">
 	<s:param name="page" value="#request.p" />
 	
 	<s:param name="utente" value="#session.userData.email" />

@@ -1,4 +1,4 @@
-package it.store.pojo;
+package it.store.filtro;
 
 import org.apache.commons.lang3.StringUtils;
 

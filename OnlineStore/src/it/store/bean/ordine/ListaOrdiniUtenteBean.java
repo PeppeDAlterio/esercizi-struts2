@@ -6,7 +6,7 @@ import it.store.service.OrdineService;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ListaOrdiniBean {
+public class ListaOrdiniUtenteBean {
 	
 	private List<Ordine> listaOrdini = null;
 	private String utente;
