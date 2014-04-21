@@ -36,6 +36,7 @@
 				<s:textfield label="%{getText('gestioneOrdiniView.utente_email')}" key="utente_email" maxlength="50" />
 				<sj:datepicker label="%{getText('gestioneOrdiniView.data_creazione')}" key="data" displayFormat="yy-mm-dd" readonly="true" />
 				<s:textfield id="stato" label="%{getText('gestioneOrdiniView.stato')}" key="stato" maxlength="20" />
+				<s:hidden key="page" value="0" />
 				<s:submit value="%{getText('gestioneOrdiniView.submit')}" />
 			</s:form>
 		</td>

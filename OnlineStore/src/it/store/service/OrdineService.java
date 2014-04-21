@@ -4,6 +4,7 @@ import it.store.dto.Articolo;
 import it.store.dto.Carrello;
 import it.store.dto.Indirizzo;
 import it.store.dto.Ordine;
+import it.store.filtro.FiltroRicercaOrdini;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -299,6 +300,31 @@ public class OrdineService extends DatabaseService {
 		statement.close();
 		
 		return false;
+	}
+	
+	public List<Ordine> ricercaOrdini(FiltroRicercaOrdini filtro, int p) throws SQLException {
+		List<Ordine> risultati = new ArrayList<Ordine>();
+		
+		String query = "SELECT * FROM Ordine WHERE Utente_email LIKE ? AND data LIKE ? AND stato LIKE ? ORDER BY data DESC LIMIT ?, 10";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, filtro.getUtente_email());
+		statement.setString(2, filtro.getData());
+		statement.setString(3, filtro.getStato());
+		statement.setInt(4, p*10);
+		
+		ResultSet result = statement.executeQuery();
+		
+		Ordine tmp;
+		while(result.next()) {
+			tmp = new Ordine();
+			tmp.setId_ordine(result.getInt("id"));
+			tmp.setData(result.getString("data"));
+			tmp.setStato(result.getString("stato"));
+			
+			risultati.add(tmp);
+		}
+		
+		return risultati; 
 	}
 
 }
