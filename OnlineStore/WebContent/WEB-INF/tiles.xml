@@ -208,7 +208,7 @@
 		<!-- Gestione -->
 		<definition name="gestioneOrdini" extends="azione">
 			<put-attribute name="title" value="Gestione ordini" />
-			<put-attribute name="body" value="/pages/area_operatore/view/gestione_ordini.jsp" />
+			<put-attribute name="body" value="/pages/area_operatore/views/gestione_ordini.jsp" />
 		</definition>
 <!-- FINE Area operatore -->
 
