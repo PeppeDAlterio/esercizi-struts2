@@ -4,6 +4,7 @@ import it.store.dto.Articolo;
 import it.store.dto.Carrello;
 import it.store.dto.Indirizzo;
 import it.store.dto.Ordine;
+import it.store.dto.User;
 import it.store.filtro.FiltroRicercaOrdini;
 
 import java.sql.ResultSet;
@@ -343,6 +344,27 @@ public class OrdineService extends DatabaseService {
 		statement.close();
 		
 		return totale_pagine; 
+	}
+	
+	public void modificaOrdine(Ordine ordine, User userData) throws SQLException {
+		
+		//data modifica
+		Date dNow = new Date();
+		// YYYY-MM-DD HH:MM:SS
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+		String data_modifica = format.format(dNow);
+		
+		String query = "UPDATE Ordine SET stato=?, data_spedizione=?, data_modifica=?, email_modifica=? WHERE id=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, ordine.getStato());
+		statement.setString(2, ordine.getData_spedizione());
+		statement.setString(3, data_modifica);
+		statement.setString(4, userData.email);
+		statement.setInt(5, ordine.getId_ordine());
+		
+		statement.executeUpdate();
+		
+		statement.close();
 	}
 
 }

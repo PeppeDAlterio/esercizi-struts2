@@ -158,7 +158,7 @@
 			</action>
 			
 			<!-- Action -->
-			<action name="modificaOrdine">
+			<action name="modificaOrdine" class="it.store.action.area_operatore.ModificaOrdineAction">
 				<result name="login" type="tiles">loginForm</result>
 				
 				<result name="access_denied" type="redirectAction">
