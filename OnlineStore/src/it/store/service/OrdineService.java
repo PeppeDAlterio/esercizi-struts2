@@ -250,16 +250,16 @@ public class OrdineService extends DatabaseService {
 	/*
 	 * @return: false=ok | true=errore: ordine già spedito o non trovato
 	 */
-	public boolean modificaIndirizzoOrdine(int id_ordine, String utente, Indirizzo indirizzo) throws SQLException {
+	public boolean modificaIndirizzoOrdine(int id_ordine, String utente, int tipoAccount, Indirizzo indirizzo) throws SQLException {
 		
-		String query = "SELECT stato FROM Ordine WHERE id=? AND Utente_email=?";
+		String query = "SELECT stato, Utente_email FROM Ordine WHERE id=?";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setInt(1, id_ordine);
-		statement.setString(2, utente);
 		ResultSet result = statement.executeQuery();
 		
 		if(result.next()) {
-			if(result.getString(1).equals("spedito")) {
+			//già spedito o non associato a questo utente
+			if(result.getString(1).equals("spedito") || ( !result.getString("Utente_email").equals(utente) && tipoAccount==1 ) ) {
 				result.close();
 				statement.close();
 				return true;
