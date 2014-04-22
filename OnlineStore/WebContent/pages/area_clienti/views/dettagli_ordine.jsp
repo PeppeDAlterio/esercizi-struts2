@@ -3,6 +3,7 @@
 <%-- BEAN: Leggo i dati dell'ordine --%>
 <s:bean name="it.store.bean.ordine.DatiOrdineBean" var="ordineBean">
 	<s:param name="utente" value="#session.userData.email" />
+	<s:param name="tipoAccount" value="#session.userData.tipo" />
 	
 	<s:param name="id_ordine" value="#parameters.id_ordine" />
 </s:bean>
@@ -10,6 +11,17 @@
 <H3>
 	<s:text name="ordineView.titolo" />
 </H3>
+
+<%-- Operatore+ --%>
+<s:if test="%{#session.userData.tipo>1}">
+	<s:a action="modificaOrdine" namespace="/areaoperatore">
+		<s:param name="id_ordine" value="#parameters.id_ordine" />
+		
+		<s:text name="dettOrdineView.modifica" />
+	</s:a>
+</s:if>
+<br>
+<br>
 
 <s:if test="hasActionErrors()">
    <div class="actionError">
@@ -31,6 +43,7 @@
    </div>
    <br>
 </s:if>
+
 
 <table class="commonTable" style="width: 90%;">
 	<tr class="commonTr">
@@ -161,11 +174,16 @@
 			<br>
 			<s:text name="dettOrdineView.ultima_modifica" />:&nbsp;<i><s:property value="#ordineBean.ordine.data_modifica" default="N/A" /></i>
 			<br>
+			<%-- Operatore+ --%>
+			<s:if test="%{#session.userData.tipo>1}">
+				<s:text name="dettOrdineView.email_modifica" />:&nbsp;<i><s:property value="#ordineBean.ordine.email_modifica" default="N/A" /></i>
+			</s:if>
 		</td>
 	</tr>
 		
 </table>
 
+<br>
 <s:a action="gestioneOrdini" namespace="/areacliente">
 	<input type="button" value="<s:text name='global.indietro' />" />
 </s:a>

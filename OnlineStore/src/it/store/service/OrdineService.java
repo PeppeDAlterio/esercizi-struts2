@@ -167,17 +167,21 @@ public class OrdineService extends DatabaseService {
 		return listaOrdini;
 	}
 	
-	public Ordine getOrdineById(int id_ordine, String utente) throws SQLException, ClassNotFoundException {
+	public Ordine getOrdineById(int id_ordine, String utente, int tipoAccount) throws SQLException, ClassNotFoundException {
 		Ordine ordine = new Ordine();
 		
-		String query = "SELECT * FROM Ordine, Ordine_indirizzo WHERE id=? AND Utente_email=? AND id=Ordine_id";
+		String query = "SELECT * FROM Ordine, Ordine_indirizzo WHERE id=? AND id=Ordine_id";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setInt(1, id_ordine);
-		statement.setString(2, utente);
 		ResultSet result = statement.executeQuery();
 		
 		if(result.next()) {
-			riempi_dati_ordine(ordine, result);
+			//controllo che l'ordine sia di di questo utente o che l'utente sia un operatore o sup.
+			if( result.getString("Utente_email").equals(utente) || tipoAccount>1) {
+				riempi_dati_ordine(ordine, result);
+			} else {
+				ordine = null;
+			}
 		} else {
 			ordine = null;
 		}
