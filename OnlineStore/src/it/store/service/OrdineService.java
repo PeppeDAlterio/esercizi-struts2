@@ -4,6 +4,7 @@ import it.store.dto.Articolo;
 import it.store.dto.Carrello;
 import it.store.dto.Indirizzo;
 import it.store.dto.Ordine;
+import it.store.dto.User;
 import it.store.filtro.FiltroRicercaOrdini;
 
 import java.sql.ResultSet;
@@ -144,7 +145,7 @@ public class OrdineService extends DatabaseService {
 	public List<Ordine> getOrdiniCliente(String utente, int page) throws SQLException, ClassNotFoundException {
 		List<Ordine> listaOrdini = new ArrayList<Ordine>();
 		
-		String query = "SELECT * FROM Ordine WHERE Utente_email=? ORDER BY data DESC LIMIT ?, 5";
+		String query = "SELECT * FROM Ordine, Ordine_indirizzo WHERE Utente_email=? AND id=Ordine_id ORDER BY data DESC LIMIT ?, 5";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, utente);
 		statement.setInt(2, page*5);
@@ -167,17 +168,21 @@ public class OrdineService extends DatabaseService {
 		return listaOrdini;
 	}
 	
-	public Ordine getOrdineById(int id_ordine, String utente) throws SQLException, ClassNotFoundException {
+	public Ordine getOrdineById(int id_ordine, String utente, int tipoAccount) throws SQLException, ClassNotFoundException {
 		Ordine ordine = new Ordine();
 		
-		String query = "SELECT * FROM Ordine WHERE id=? AND Utente_email=?";
+		String query = "SELECT * FROM Ordine, Ordine_indirizzo WHERE id=? AND id=Ordine_id";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setInt(1, id_ordine);
-		statement.setString(2, utente);
 		ResultSet result = statement.executeQuery();
 		
 		if(result.next()) {
-			riempi_dati_ordine(ordine, result);
+			//controllo che l'ordine sia di di questo utente o che l'utente sia un operatore o sup.
+			if( result.getString("Utente_email").equals(utente) || tipoAccount>1) {
+				riempi_dati_ordine(ordine, result);
+			} else {
+				ordine = null;
+			}
 		} else {
 			ordine = null;
 		}
@@ -197,6 +202,16 @@ public class OrdineService extends DatabaseService {
 		ordine.setStato(result.getString("stato"));
 		ordine.setData_modifica(result.getString("data_modifica"));
 		ordine.setEmail_modifica(result.getString("email_modifica"));
+		Indirizzo indirizzo = new Indirizzo();
+		indirizzo.nome_cognome 	= result.getString("nome_cognome");
+		indirizzo.indirizzo_1  	= result.getString("indirizzo_1");
+		indirizzo.indirizzo_2	= result.getString("indirizzo_2");
+		indirizzo.citta			= result.getString("citta");
+		indirizzo.provincia		= result.getString("provincia");
+		indirizzo.cap			= result.getString("cap");
+		indirizzo.paese			= result.getString("paese");
+		indirizzo.telefono		= result.getString("telefono");
+		ordine.setIndirizzo(indirizzo);
 		
 		//leggo gli ordini associati
 		String query = "SELECT * FROM Ordine_articoli WHERE Ordine_id=?";
@@ -208,15 +223,6 @@ public class OrdineService extends DatabaseService {
 		
 		res.close();
 		statement.close();
-		
-		//leggo l'indirizzo associati
-		query = "SELECT * FROM Ordine_indirizzo WHERE Ordine_id=?";
-		statement = conn.prepareStatement(query);
-		statement.setInt(1, ordine.getId_ordine());
-		res = statement.executeQuery();
-		
-		res.next();
-		riempi_indirizzo_ordine(ordine, res);
 	}
 	
 	//inserisci gli articoli in una lista e la associa al carrello dell'ordine
@@ -241,35 +247,21 @@ public class OrdineService extends DatabaseService {
 		
 		ordine.setCarrello(carrello);
 	}
-	
-	//riempi i campi relativi all'indirizzo. Il ResultSet deve già essere sul primo record!
-	private void riempi_indirizzo_ordine(Ordine ordine, ResultSet result) throws SQLException {
-		Indirizzo indirizzo = new Indirizzo();
-		indirizzo.nome_cognome 	= result.getString("nome_cognome");
-		indirizzo.indirizzo_1  	= result.getString("indirizzo_1");
-		indirizzo.indirizzo_2	= result.getString("indirizzo_2");
-		indirizzo.citta			= result.getString("citta");
-		indirizzo.provincia		= result.getString("provincia");
-		indirizzo.cap			= result.getString("cap");
-		indirizzo.paese			= result.getString("paese");
-		indirizzo.telefono		= result.getString("telefono");
 		
-		ordine.setIndirizzo(indirizzo);
-	}
-	
 	/*
 	 * @return: false=ok | true=errore: ordine già spedito o non trovato
 	 */
-	public boolean modificaIndirizzoOrdine(int id_ordine, String utente, Indirizzo indirizzo) throws SQLException {
+	public boolean modificaIndirizzoOrdine(int id_ordine, String utente, int tipoAccount, Indirizzo indirizzo) throws SQLException {
 		
-		String query = "SELECT stato FROM Ordine WHERE id=? AND Utente_email=?";
+		String query = "SELECT stato, Utente_email FROM Ordine WHERE id=?";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setInt(1, id_ordine);
-		statement.setString(2, utente);
 		ResultSet result = statement.executeQuery();
 		
 		if(result.next()) {
-			if(result.getString(1).equals("spedito")) {
+			//già spedito o non associato a questo utente
+			String stato = result.getString(1);
+			if(stato.equals("spedito") || stato.equals("ricevuto") || stato.equals("chiuso") || ( !result.getString("Utente_email").equals(utente) && tipoAccount==1 ) ) {
 				result.close();
 				statement.close();
 				return true;
@@ -352,6 +344,27 @@ public class OrdineService extends DatabaseService {
 		statement.close();
 		
 		return totale_pagine; 
+	}
+	
+	public void modificaOrdine(Ordine ordine, User userData) throws SQLException {
+		
+		//data modifica
+		Date dNow = new Date();
+		// YYYY-MM-DD HH:MM:SS
+		SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+		String data_modifica = format.format(dNow);
+		
+		String query = "UPDATE Ordine SET stato=?, data_spedizione=?, data_modifica=?, email_modifica=? WHERE id=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, ordine.getStato());
+		statement.setString(2, ordine.getData_spedizione());
+		statement.setString(3, data_modifica);
+		statement.setString(4, userData.email);
+		statement.setInt(5, ordine.getId_ordine());
+		
+		statement.executeUpdate();
+		
+		statement.close();
 	}
 
 }

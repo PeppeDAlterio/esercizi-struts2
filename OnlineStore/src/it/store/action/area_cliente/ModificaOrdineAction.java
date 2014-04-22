@@ -40,7 +40,7 @@ public class ModificaOrdineAction extends ActionSupport implements Preparable {
 		OrdineService ordineService;
 		try {
 			ordineService = new OrdineService();
-			this.ordine = ordineService.getOrdineById(id_ordine, userData.email);
+			this.ordine = ordineService.getOrdineById(id_ordine, userData.email, userData.getTipo());
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			addActionError(getText("errori.generico"));

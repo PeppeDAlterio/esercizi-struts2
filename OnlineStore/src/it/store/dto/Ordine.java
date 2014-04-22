@@ -1,5 +1,7 @@
 package it.store.dto;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Ordine {
 	
 	private int id_ordine = -1;
@@ -46,6 +48,9 @@ public class Ordine {
 	}
 
 	public void setData_spedizione(String data_spedizione) {
+		if(StringUtils.isBlank(data_spedizione)) {
+			data_spedizione = null;
+		}
 		this.data_spedizione = data_spedizione;
 	}
 

@@ -11,6 +11,8 @@ public class DatiOrdineBean {
 	private String utente;
 	private int id_ordine = -1;
 	
+	private int tipoAccount = 1;
+	
 	public Ordine getOrdine() {
 		return ordine;
 	}
@@ -37,12 +39,20 @@ public class DatiOrdineBean {
 		OrdineService ordineService;
 		try {
 			ordineService = new OrdineService();
-			this.ordine = ordineService.getOrdineById(id_ordine, utente);
+			this.ordine = ordineService.getOrdineById(id_ordine, utente, tipoAccount);
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ordineService = null;
 		}
+	}
+
+	public int getTipoAccount() {
+		return tipoAccount;
+	}
+
+	public void setTipoAccount(int tipoAccount) {
+		this.tipoAccount = tipoAccount;
 	}
 	
 }

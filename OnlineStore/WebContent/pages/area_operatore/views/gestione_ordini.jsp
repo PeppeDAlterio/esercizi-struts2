@@ -7,6 +7,28 @@
 	<s:text name="gestioneOrdiniView.titolo" />
 </h3>
 
+<s:if test="hasActionErrors()">
+   <div class="actionError">
+      <s:iterator value="actionErrors">
+        <div align="center">
+			<span><s:property escape="false" /></span>
+		</div>
+	  </s:iterator>
+   </div>
+   <br>
+</s:if>
+<s:if test="hasActionMessages()">
+   <div class="actionMessage">
+      <s:iterator value="actionMessages">
+        <div align="center">
+			<span><s:property escape="false" /></span>
+		</div>
+	  </s:iterator>
+   </div>
+   <br>
+</s:if>
+
+
 <table class="commonTable" style="width: 90%;">
 	
 	<tr class="commonTr">
@@ -84,7 +106,7 @@
 					<s:property value="#ordine.stato" />
 				</td>
 				<td>
-					<s:a action="BOH" namespace="/areaoperatore" target="_blank">
+					<s:a action="modificaOrdineForm" namespace="/areaoperatore" target="_blank">
 						<s:param name="id_ordine" value="%{#ordine.id_ordine}" />
 					
 						<s:text name="gestioneOrdiniView.gestisci" />

@@ -67,7 +67,7 @@ public class ModificaIndirizzoOrdineAction extends ActionSupport implements Mode
 		OrdineService ordineService;
 		try {
 			ordineService = new OrdineService();
-			errore = ordineService.modificaIndirizzoOrdine(id_ordine, userData.email, indirizzo);
+			errore = ordineService.modificaIndirizzoOrdine(id_ordine, userData.email, userData.getTipo(), indirizzo);
 		} catch (ClassNotFoundException|SQLException e) {
 			e.printStackTrace();
 			addActionError(getText("errori.generico"));
