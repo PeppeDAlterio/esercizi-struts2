@@ -170,7 +170,7 @@ public class OrdineService extends DatabaseService {
 	public Ordine getOrdineById(int id_ordine, String utente) throws SQLException, ClassNotFoundException {
 		Ordine ordine = new Ordine();
 		
-		String query = "SELECT * FROM Ordine WHERE id=? AND Utente_email=?";
+		String query = "SELECT * FROM Ordine, Ordine_indirizzo WHERE id=? AND Utente_email=? AND id=Ordine_id";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setInt(1, id_ordine);
 		statement.setString(2, utente);
@@ -197,6 +197,16 @@ public class OrdineService extends DatabaseService {
 		ordine.setStato(result.getString("stato"));
 		ordine.setData_modifica(result.getString("data_modifica"));
 		ordine.setEmail_modifica(result.getString("email_modifica"));
+		Indirizzo indirizzo = new Indirizzo();
+		indirizzo.nome_cognome 	= result.getString("nome_cognome");
+		indirizzo.indirizzo_1  	= result.getString("indirizzo_1");
+		indirizzo.indirizzo_2	= result.getString("indirizzo_2");
+		indirizzo.citta			= result.getString("citta");
+		indirizzo.provincia		= result.getString("provincia");
+		indirizzo.cap			= result.getString("cap");
+		indirizzo.paese			= result.getString("paese");
+		indirizzo.telefono		= result.getString("telefono");
+		ordine.setIndirizzo(indirizzo);
 		
 		//leggo gli ordini associati
 		String query = "SELECT * FROM Ordine_articoli WHERE Ordine_id=?";
@@ -208,15 +218,6 @@ public class OrdineService extends DatabaseService {
 		
 		res.close();
 		statement.close();
-		
-		//leggo l'indirizzo associati
-		query = "SELECT * FROM Ordine_indirizzo WHERE Ordine_id=?";
-		statement = conn.prepareStatement(query);
-		statement.setInt(1, ordine.getId_ordine());
-		res = statement.executeQuery();
-		
-		res.next();
-		riempi_indirizzo_ordine(ordine, res);
 	}
 	
 	//inserisci gli articoli in una lista e la associa al carrello dell'ordine
@@ -241,22 +242,7 @@ public class OrdineService extends DatabaseService {
 		
 		ordine.setCarrello(carrello);
 	}
-	
-	//riempi i campi relativi all'indirizzo. Il ResultSet deve già essere sul primo record!
-	private void riempi_indirizzo_ordine(Ordine ordine, ResultSet result) throws SQLException {
-		Indirizzo indirizzo = new Indirizzo();
-		indirizzo.nome_cognome 	= result.getString("nome_cognome");
-		indirizzo.indirizzo_1  	= result.getString("indirizzo_1");
-		indirizzo.indirizzo_2	= result.getString("indirizzo_2");
-		indirizzo.citta			= result.getString("citta");
-		indirizzo.provincia		= result.getString("provincia");
-		indirizzo.cap			= result.getString("cap");
-		indirizzo.paese			= result.getString("paese");
-		indirizzo.telefono		= result.getString("telefono");
 		
-		ordine.setIndirizzo(indirizzo);
-	}
-	
 	/*
 	 * @return: false=ok | true=errore: ordine già spedito o non trovato
 	 */

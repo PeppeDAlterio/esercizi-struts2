@@ -127,7 +127,7 @@
 			</result>
 			
 			
-			<result name="*" type="tiles">gestioneOrdini</result>
+			<result name="*" type="tiles">gestioneOrdiniOperatore</result>
 		</action>
 	
 		<!-- Ricerca ordini -->
@@ -140,7 +140,7 @@
 			</result>
 		
 		
-			<result name="*" type="tiles">gestioneOrdini</result>
+			<result name="*" type="tiles">gestioneOrdiniOperatore</result>
 		</action>
 	
 </package>
