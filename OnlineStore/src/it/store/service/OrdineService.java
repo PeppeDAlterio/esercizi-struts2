@@ -308,7 +308,7 @@ public class OrdineService extends DatabaseService {
 	 */
 	public int ricercaOrdini(FiltroRicercaOrdini filtro, int p, List<Ordine> risultati) throws SQLException {
 		
-		String query = "SELECT * FROM Ordine WHERE Utente_email LIKE ? AND data LIKE ? AND stato LIKE ? ORDER BY data DESC LIMIT ?, 10";
+		String query = "SELECT * FROM Ordine WHERE Utente_email LIKE ? AND DATE(data) LIKE ? AND stato LIKE ? ORDER BY data DESC LIMIT ?, 10";
 		PreparedStatement statement = conn.prepareStatement(query);
 		statement.setString(1, filtro.getUtente_email());
 		statement.setString(2, filtro.getData());
@@ -328,15 +328,15 @@ public class OrdineService extends DatabaseService {
 			risultati.add(tmp);
 		}
 		
-		result.close();
 		
 		//leggo lo statement dal precedente
 		String str = statement.toString();
 		query = str.substring(str.indexOf("SELECT"), str.lastIndexOf("ORDER"));
 		
 		//sostituisco il SELECT * con SELECT COUNT(*)
-		query.replace("SELECT *", "SELECT COUNT(*)");
+		query = query.replace("SELECT *", "SELECT COUNT(*)");
 		
+		result.close();
 		statement.close();
 		
 		//leggo numero pagine

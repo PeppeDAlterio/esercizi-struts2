@@ -33,9 +33,9 @@
 	<tr class="commonTr">
 		<td class="commonTd">
 			<s:form action="ricercaOrdine" namespace="/areaoperatore" method="GET" cssStyle="margin: auto;">
-				<s:textfield label="%{getText('gestioneOrdiniView.utente_email')}" key="utente_email" maxlength="50" />
-				<sj:datepicker label="%{getText('gestioneOrdiniView.data_creazione')}" key="data" displayFormat="yy-mm-dd" readonly="true" />
-				<s:textfield id="stato" label="%{getText('gestioneOrdiniView.stato')}" key="stato" maxlength="20" />
+				<s:textfield label="%{getText('gestioneOrdiniView.utente_email')}" key="utente_email" value="" maxlength="50" />
+				<sj:datepicker label="%{getText('gestioneOrdiniView.data_creazione')}" key="data" value="" displayFormat="yy-mm-dd" readonly="true" />
+				<s:textfield id="stato" label="%{getText('gestioneOrdiniView.stato')}" key="stato" value="" maxlength="20" />
 				<s:hidden key="page" value="0" />
 				<s:submit value="%{getText('gestioneOrdiniView.submit')}" />
 			</s:form>
@@ -84,7 +84,7 @@
 					<s:property value="#ordine.stato" />
 				</td>
 				<td>
-					<s:a action="BOH" namespace="/areaoperatore">
+					<s:a action="BOH" namespace="/areaoperatore" target="_blank">
 						<s:param name="id_ordine" value="%{#ordine.id_ordine}" />
 					
 						<s:text name="gestioneOrdiniView.gestisci" />
