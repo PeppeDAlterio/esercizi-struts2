@@ -259,7 +259,8 @@ public class OrdineService extends DatabaseService {
 		
 		if(result.next()) {
 			//già spedito o non associato a questo utente
-			if(result.getString(1).equals("spedito") || ( !result.getString("Utente_email").equals(utente) && tipoAccount==1 ) ) {
+			String stato = result.getString(1);
+			if(stato.equals("spedito") || stato.equals("ricevuto") || stato.equals("chiuso") || ( !result.getString("Utente_email").equals(utente) && tipoAccount==1 ) ) {
 				result.close();
 				statement.close();
 				return true;

@@ -14,7 +14,7 @@
 
 <%-- Operatore+ --%>
 <s:if test="%{#session.userData.tipo>1}">
-	<s:a action="modificaOrdine" namespace="/areaoperatore">
+	<s:a action="modificaOrdineForm" namespace="/areaoperatore">
 		<s:param name="id_ordine" value="#parameters.id_ordine" />
 		
 		<s:text name="dettOrdineView.modifica" />

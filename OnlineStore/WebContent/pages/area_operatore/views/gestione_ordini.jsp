@@ -84,7 +84,7 @@
 					<s:property value="#ordine.stato" />
 				</td>
 				<td>
-					<s:a action="modificaOrdine" namespace="/areaoperatore" target="_blank">
+					<s:a action="modificaOrdineForm" namespace="/areaoperatore" target="_blank">
 						<s:param name="id_ordine" value="%{#ordine.id_ordine}" />
 					
 						<s:text name="gestioneOrdiniView.gestisci" />

@@ -142,6 +142,35 @@
 		
 			<result name="*" type="tiles">gestioneOrdiniOperatore</result>
 		</action>
+		
+		<!-- Modifica ordine -->
+			<!-- Form -->
+			<action name="modificaOrdineForm">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				
+				<result name="*" type="tiles">modificaDatiOrdine</result>
+			</action>
+			
+			<!-- Action -->
+			<action name="modificaOrdine">
+				<result name="login" type="tiles">loginForm</result>
+				
+				<result name="access_denied" type="redirectAction">
+					<param name="actionName">403</param>
+					<param name="namespace">/</param>
+				</result>
+				
+				
+				<result name="success" type="tiles">gestioneOrdiniOperatore</result>
+				
+				<result name="*" type="tiles">modificaDatiOrdine</result>
+			</action>
 	
 </package>
 

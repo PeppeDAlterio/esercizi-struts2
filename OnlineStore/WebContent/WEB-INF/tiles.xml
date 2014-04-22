@@ -210,6 +210,12 @@
 			<put-attribute name="title" value="Gestione ordini" />
 			<put-attribute name="body" value="/pages/area_operatore/views/gestione_ordini.jsp" />
 		</definition>
+		
+		<!-- Modifica ordine -->
+		<definition name="modificaDatiOrdine" extends="azione">
+			<put-attribute name="title" value="Modifica ordine" />
+			<put-attribute name="body" value="/pages/area_operatore/forms/modifica_ordine.jsp" />
+		</definition>
 <!-- FINE Area operatore -->
 
 <!-- INIZIO Area amministratore -->
