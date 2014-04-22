@@ -203,6 +203,13 @@
 			<put-attribute name="title" value="Nuovo articolo" />
 			<put-attribute name="body" value="/pages/area_operatore/forms/nuovo_articolo.jsp" />
 		</definition>
+		
+	<!-- Gestione ordini -->
+		<!-- Gestione -->
+		<definition name="gestioneOrdini" extends="azione">
+			<put-attribute name="title" value="Gestione ordini" />
+			<put-attribute name="body" value="/pages/area_operatore/views/gestione_ordini.jsp" />
+		</definition>
 <!-- FINE Area operatore -->
 
 <!-- INIZIO Area amministratore -->

@@ -16,9 +16,17 @@
 			<ul>
 			<s:if test="%{#session.userData.tipo>2}">
 				<!-- ADMIN+ -->
-				<li><s:a action="gestioneCategorie" namespace="/admin"><s:property value="getText('pcView.ges_categorie')" /></s:a></li>
+				<li>
+					<s:a action="gestioneCategorie" namespace="/admin">
+						<s:property value="getText('pcView.ges_categorie')" />
+					</s:a>
+				</li>
 			</s:if>
-			<li><s:a action="gestioneArticoli" namespace="/areaoperatore"><s:property value="getText('pcView.ges_articoli')" /></s:a></li>
+			<li>
+				<s:a action="gestioneArticoli" namespace="/areaoperatore">
+					<s:property value="getText('pcView.ges_articoli')" />
+				</s:a>
+			</li>
 			</ul>
 		</td>
 	</tr>
@@ -34,7 +42,11 @@
 	<tr class="commonTr">
 		<td class="commonTh" style="text-align: left;">
 			<ul>
-			<li><s:property value="getText('pcView.ges_ordini')" /></li>
+			<li>
+				<s:a action="gestioneOrdini" namespace="/areaoperatore">
+					<s:property value="getText('pcView.ges_ordini')" />
+				</s:a>
+			</li>
 			<li><s:property value="getText('pcView.ges_fb')" /></li>
 			</ul>
 		</td>

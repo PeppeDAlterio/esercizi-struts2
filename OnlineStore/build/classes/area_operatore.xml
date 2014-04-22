@@ -24,98 +24,124 @@
 	<default-interceptor-ref name="checkLoginStack"/>
 
 
-<!-- Pannello di controllo sito web -->
-	<action name="pannelloControlloSito">
-		<result name="login" type="tiles">loginForm</result>
-		
-		<result name="access_denied" type="redirectAction">
-			<param name="actionName">403</param>
-			<param name="namespace">/</param>
-		</result>
-		
-		
-		<result name="*" type="tiles">pannelloControlloSito</result>
-	</action>
-	
-<!-- Gestione catalogo -->
-	<!-- Gestione articoli -->
-	<action name="gestioneArticoli">
-		<result name="login" type="tiles">loginForm</result>
-		
-		<result name="access_denied" type="redirectAction">
-			<param name="actionName">403</param>
-			<param name="namespace">/</param>
-		</result>
-		
-		<result name="*" type="tiles">gestioneArticoli</result>
-	</action>
-	
-		<!-- Nuovo articolo -->
-			<!-- Form -->
-			<action name="nuovoArticoloForm">
-				<result name="login" type="tiles">loginForm</result>
-			
-				<result name="access_denied" type="redirectAction">
-					<param name="actionName">403</param>
-					<param name="namespace">/</param>
-				</result>
-			
-			
-				<result name="*" type="tiles">nuovoArticoloForm</result>
-			</action>
-			
-			<!-- Action -->
-			<action name="nuovoArticolo" class="it.store.action.area_operatore.NuovoArticoloAction">
-				<result name="login" type="tiles">loginForm</result>
-			
-				<result name="access_denied" type="redirectAction">
-					<param name="actionName">403</param>
-					<param name="namespace">/</param>
-				</result>
-				
-				
-				<result name="success" type="tiles">gestioneArticoli</result>
-				
-				<result name="*" type="tiles">nuovoArticoloForm</result>
-			</action>
-			
-		<!-- Modifica articolo -->
-		<action name="modificaArticolo">			
+	<!-- Pannello di controllo sito web -->
+		<action name="pannelloControlloSito">
 			<result name="login" type="tiles">loginForm</result>
-		
+			
 			<result name="access_denied" type="redirectAction">
 				<param name="actionName">403</param>
 				<param name="namespace">/</param>
 			</result>
-				
-			<result name="*" type="tiles">nuovoArticoloForm</result>
+			
+			
+			<result name="*" type="tiles">pannelloControlloSito</result>
 		</action>
-	
-		<!-- Ricerca articoli -->
-			<!-- Tramite ID -->
-			<action name="ricercaArticoloById" class="it.store.action.area_operatore.RicercaArticoloByIdAction">
-				<result name="login" type="tiles">loginForm</result>
+		
+	<!-- Gestione catalogo -->
+		<!-- Gestione articoli -->
+		<action name="gestioneArticoli">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			<result name="*" type="tiles">gestioneArticoli</result>
+		</action>
+		
+			<!-- Nuovo articolo -->
+				<!-- Form -->
+				<action name="nuovoArticoloForm">
+					<result name="login" type="tiles">loginForm</result>
 				
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+				
+				
+					<result name="*" type="tiles">nuovoArticoloForm</result>
+				</action>
+				
+				<!-- Action -->
+				<action name="nuovoArticolo" class="it.store.action.area_operatore.NuovoArticoloAction">
+					<result name="login" type="tiles">loginForm</result>
+				
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+					
+					
+					<result name="success" type="tiles">gestioneArticoli</result>
+					
+					<result name="*" type="tiles">nuovoArticoloForm</result>
+				</action>
+				
+			<!-- Modifica articolo -->
+			<action name="modificaArticolo">			
+				<result name="login" type="tiles">loginForm</result>
+			
 				<result name="access_denied" type="redirectAction">
 					<param name="actionName">403</param>
 					<param name="namespace">/</param>
 				</result>
-				
-				<result name="*" type="tiles">gestioneArticoli</result>
+					
+				<result name="*" type="tiles">nuovoArticoloForm</result>
 			</action>
 		
-			<!-- Tramite filtro -->
-			<action name="ricercaArticoli" class="it.store.action.area_operatore.RicercaArticoliAction">
-				<result name="login" type="tiles">loginForm</result>
-				
-				<result name="access_denied" type="redirectAction">
-					<param name="actionName">403</param>
-					<param name="namespace">/</param>
-				</result>
-				
-				<result name="*" type="tiles">gestioneArticoli</result>
-			</action>
+			<!-- Ricerca articoli -->
+				<!-- Tramite ID -->
+				<action name="ricercaArticoloById" class="it.store.action.area_operatore.RicercaArticoloByIdAction">
+					<result name="login" type="tiles">loginForm</result>
+					
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+					
+					<result name="*" type="tiles">gestioneArticoli</result>
+				</action>
+			
+				<!-- Tramite filtro -->
+				<action name="ricercaArticoli" class="it.store.action.area_operatore.RicercaArticoliAction">
+					<result name="login" type="tiles">loginForm</result>
+					
+					<result name="access_denied" type="redirectAction">
+						<param name="actionName">403</param>
+						<param name="namespace">/</param>
+					</result>
+					
+					<result name="*" type="tiles">gestioneArticoli</result>
+				</action>
+			
+	<!-- Gestione ordini -->
+		<!-- Gestione ordini -->
+		<action name="gestioneOrdini">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">gestioneOrdini</result>
+		</action>
 	
+		<!-- Ricerca ordini -->
+		<action name="ricercaOrdine" class="it.store.action.area_operatore.RicercaOrdiniAction">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+		
+		
+			<result name="*" type="tiles">gestioneOrdini</result>
+		</action>
 	
 </package>
 

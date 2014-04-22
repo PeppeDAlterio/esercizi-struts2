@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.store.dto.Articolo;
-import it.store.pojo.FiltroRicercaArticoli;
+import it.store.filtro.FiltroRicercaArticoli;
 import it.store.service.CatalogoService;
 
 import org.apache.commons.lang3.StringUtils;

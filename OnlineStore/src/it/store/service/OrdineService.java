@@ -4,6 +4,7 @@ import it.store.dto.Articolo;
 import it.store.dto.Carrello;
 import it.store.dto.Indirizzo;
 import it.store.dto.Ordine;
+import it.store.filtro.FiltroRicercaOrdini;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -299,6 +300,58 @@ public class OrdineService extends DatabaseService {
 		statement.close();
 		
 		return false;
+	}
+	
+	
+	/*
+	 * @return: numero pagine
+	 */
+	public int ricercaOrdini(FiltroRicercaOrdini filtro, int p, List<Ordine> risultati) throws SQLException {
+		
+		String query = "SELECT * FROM Ordine WHERE Utente_email LIKE ? AND DATE(data) LIKE ? AND stato LIKE ? ORDER BY data DESC LIMIT ?, 10";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, filtro.getUtente_email());
+		statement.setString(2, filtro.getData());
+		statement.setString(3, filtro.getStato());
+		statement.setInt(4, p*10);
+		
+		ResultSet result = statement.executeQuery();
+		
+		Ordine tmp;
+		while(result.next()) {
+			tmp = new Ordine();
+			tmp.setId_ordine(result.getInt("id"));
+			tmp.setUtente_email(result.getString("Utente_email"));
+			tmp.setData(result.getString("data"));
+			tmp.setStato(result.getString("stato"));
+			
+			risultati.add(tmp);
+		}
+		
+		
+		//leggo lo statement dal precedente
+		String str = statement.toString();
+		query = str.substring(str.indexOf("SELECT"), str.lastIndexOf("ORDER"));
+		
+		//sostituisco il SELECT * con SELECT COUNT(*)
+		query = query.replace("SELECT *", "SELECT COUNT(*)");
+		
+		result.close();
+		statement.close();
+		
+		//leggo numero pagine
+		int totale_pagine=0;
+		statement = conn.prepareStatement(query);
+		result = statement.executeQuery();
+		
+		if(result.next()) { //??
+			totale_pagine = (int) Math.ceil(result.getInt(1)/10.0);
+		}
+		
+		result.close();
+		statement.close();
+		
+		return totale_pagine; 
 	}
 
 }

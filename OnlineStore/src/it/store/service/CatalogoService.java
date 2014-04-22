@@ -1,7 +1,7 @@
 package it.store.service;
 
 import it.store.dto.Articolo;
-import it.store.pojo.FiltroRicercaArticoli;
+import it.store.filtro.FiltroRicercaArticoli;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
