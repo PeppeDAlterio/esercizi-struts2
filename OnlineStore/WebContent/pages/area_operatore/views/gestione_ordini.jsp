@@ -94,10 +94,18 @@
 		<s:iterator value="#request.risultati" var="ordine">
 			<tr class="risultati">
 				<td>
-					<s:property value="#ordine.id_ordine" />
+					<s:a action="visualizzaOrdine" namespace="/areacliente" target="_blank">
+						<s:param name="id_ordine" value="%{#ordine.id_ordine}" />
+						
+						<s:property value="#ordine.id_ordine" />
+					</s:a>
 				</td>
 				<td>
-					<s:property value="#ordine.Utente_email" />
+					<s:a action="visualizzaProfilo" namespace="/areaoperatore" target="_blank">
+						<s:param name="utente" value="#ordine.Utente_email" />
+					
+						<s:property value="#ordine.Utente_email" />
+					</s:a>
 				</td>
 				<td>
 					<s:property value="#ordine.data" />
