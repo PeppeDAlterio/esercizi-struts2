@@ -69,5 +69,54 @@ public class FeedbackService extends DatabaseService {
 		
 		return false;
 	}
+	
+	public int getListaFeedback(int page, int stato, List<Feedback> listaFeedback) throws SQLException {
+		String query = "SELECT * FROM Feedback_ordine WHERE stato=? LIMIT ?, 10";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, stato);
+		statement.setInt(2, page*10);
+		ResultSet result = statement.executeQuery();
+		System.out.println(statement.toString());
+		Feedback tmp;
+		while(result.next()) {
+			tmp = new Feedback();
+			
+			riempi_feedback(tmp, result);
+			
+			listaFeedback.add(tmp);
+		}
+		
+		result.close();
+		statement.close();
+		
+		
+		//leggo numero pagine
+		int numero_pagine = 0;
+		query = "SELECT COUNT(*) FROM Feedback_ordine WHERE stato=?";
+		statement = conn.prepareStatement(query);
+		statement.setInt(1, stato);
+		result = statement.executeQuery();
+		
+		if(result.next()) { //wtf?
+			numero_pagine = (int) Math.ceil(result.getInt(1)/10.0);
+		}
+		
+		result.close();
+		statement.close();
+		
+		return numero_pagine;
+	}
+	
+	public void modificaFeedback(int stato, String utente, int id_ordine) throws SQLException {
+		String query = "UPDATE Feedback_ordine SET stato=?, approvato_da=? WHERE Ordine_id=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, stato);
+		statement.setString(2, utente);
+		statement.setInt(3, id_ordine);
+		
+		statement.executeUpdate();
+		
+		statement.close();
+	}
 
 }

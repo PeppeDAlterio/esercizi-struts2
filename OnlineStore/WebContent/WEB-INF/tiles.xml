@@ -216,6 +216,13 @@
 			<put-attribute name="title" value="Modifica ordine" />
 			<put-attribute name="body" value="/pages/area_operatore/forms/modifica_ordine.jsp" />
 		</definition>
+		
+	<!-- Gestione feedback -->
+		<!-- Feedback da approvare -->
+		<definition name="feedbackDaApprovare" extends="azione">
+			<put-attribute name="title" value="Gestione feedback" />
+			<put-attribute name="body" value="/pages/area_operatore/views/gestione_feedback.jsp" />
+		</definition>
 <!-- FINE Area operatore -->
 
 <!-- INIZIO Area amministratore -->

@@ -166,6 +166,8 @@
 	
 	<tr class="commonTr">
 		<td class="commonTd" colspan="2" style="text-align: center;">
+			<s:text name="dettOrdineView.cliente" />:&nbsp;<i><s:property value="#ordineBean.ordine.Utente_email" /></i>
+			<br>
 			<s:text name="dettOrdineView.data" />:&nbsp;<i><s:property value="#ordineBean.ordine.data" /></i>
 			<br>
 			<s:text name="dettOrdineView.stato" />:&nbsp;<i><s:text name="stato.%{#ordineBean.ordine.stato}" /></i>
