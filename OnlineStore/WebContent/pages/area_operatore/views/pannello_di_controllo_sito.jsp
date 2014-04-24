@@ -47,7 +47,11 @@
 					<s:property value="getText('pcView.ges_ordini')" />
 				</s:a>
 			</li>
-			<li><s:property value="getText('pcView.ges_fb')" /></li>
+			<li>
+				<s:a action="gestioneFeedback" namespace="/areaoperatore">
+					<s:property value="getText('pcView.ges_fb')" />
+				</s:a>
+			</li>
 			</ul>
 		</td>
 	</tr>

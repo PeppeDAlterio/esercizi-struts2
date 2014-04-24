@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ListaFeedbackBean {
 
-	public int page = 0;
+	private int page = 0;
 	
 	private int stato = -1,
 				totale_pagine = 0;
@@ -21,6 +21,7 @@ public class ListaFeedbackBean {
 	}
 
 	public void setPage(int page) {
+		System.out.println("OMG"+page);
 		this.page = page;
 	}
 

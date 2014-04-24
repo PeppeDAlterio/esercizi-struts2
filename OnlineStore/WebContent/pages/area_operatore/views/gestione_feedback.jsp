@@ -2,9 +2,7 @@
 
 <%-- BEAN: Leggo lista feedback stato:-1 (da approvare) (10 per pagina) --%>
 <s:bean name="it.store.bean.feedback.ListaFeedbackBean" var="feedbackBean">
-	<s:if test="%{#parameters.page!=null}">
-		<s:param name="page" value="#parameters.page" />
-	</s:if>
+	<s:param name="page" value="#parameters.page" />
 	<s:param name="stato" value="-1" />
 </s:bean>
 
@@ -15,7 +13,7 @@
 <table class="commonTable" style="width: 90%;">
 
 	<tr class="commonTr">
-		<th class="commonTh">
+		<th class="commonTh" colspan="6">
 			<s:text name="gestioneFbView.lista_da_approvare" />
 		</th>
 	</tr>
@@ -80,3 +78,18 @@
 	</s:iterator>
 	
 </table>
+
+<s:text name="global.pagina" />:&nbsp;
+<s:iterator begin="1" end="%{#feedbackBean.totale_pagine}" status="status">
+	<s:if test="%{#status.index != #feedbackBean.page}">
+		<s:a action="gestioneFeedback" namespace="/areaoperatore">
+			<s:param name="page" value="#status.index" />
+			
+			<s:property value="#status.index+1" /> (<s:property value="#feedbackBean.page" />)
+		</s:a>
+	</s:if>
+	<s:else>
+		<s:property value="#status.index+1" /> (<s:property value="#feedbackBean.page" />)
+	</s:else>
+&nbsp;-&nbsp;
+</s:iterator>

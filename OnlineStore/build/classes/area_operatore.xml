@@ -171,6 +171,46 @@
 				
 				<result name="*" type="tiles">modificaDatiOrdine</result>
 			</action>
+			
+	<!-- Gestione feedback -->
+		<!-- Lista FB da approvare -->
+		<action name="gestioneFeedback">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">feedbackDaApprovare</result>
+		</action>
+		
+		<!-- Approva -->
+		<action name="approvaFeedback" class="it.store.action.area_operatore.ModificaFeedbackAction" method="accetta">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">feedbackDaApprovare</result>
+		</action>
+		
+		<!-- Rifiuta -->
+		<action name="rifiutaFeedback" class="it.store.action.area_operatore.ModificaFeedbackAction" method="rifiuta">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">feedbackDaApprovare</result>
+		</action>
 	
 </package>
 

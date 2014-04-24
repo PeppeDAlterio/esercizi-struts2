@@ -76,7 +76,7 @@ public class FeedbackService extends DatabaseService {
 		statement.setInt(1, stato);
 		statement.setInt(2, page*10);
 		ResultSet result = statement.executeQuery();
-		
+		System.out.println(statement.toString());
 		Feedback tmp;
 		while(result.next()) {
 			tmp = new Feedback();
@@ -105,6 +105,18 @@ public class FeedbackService extends DatabaseService {
 		statement.close();
 		
 		return numero_pagine;
+	}
+	
+	public void modificaFeedback(int stato, String utente, int id_ordine) throws SQLException {
+		String query = "UPDATE Feedback_ordine SET stato=?, approvato_da=? WHERE Ordine_id=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setInt(1, stato);
+		statement.setString(2, utente);
+		statement.setInt(3, id_ordine);
+		
+		statement.executeUpdate();
+		
+		statement.close();
 	}
 
 }
