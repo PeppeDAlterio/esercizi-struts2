@@ -106,4 +106,58 @@ public class AccountService extends DatabaseService {
 		
 		return errore;
 	}
+
+	public User getAccountByEmail(String email) throws SQLException {
+		
+		User userData = new User();
+		
+		String query = "SELECT * FROM Utente WHERE email=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, email);
+		ResultSet result = statement.executeQuery();
+		
+		if(result.next()) {
+			riempi_dati_account(userData, result);
+		} else {
+			userData = null;
+		}
+		
+		result.close();
+		statement.close();
+		
+		return userData;
+	}
+
+	public User getAccountByUserId(String userId) throws SQLException {
+		
+		User userData = new User();
+		
+		String query = "SELECT * FROM Utente WHERE userId=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, userId);
+		ResultSet result = statement.executeQuery();
+		
+		if(result.next()) {
+			riempi_dati_account(userData, result);
+		} else {
+			userData = null;
+		}
+		
+		result.close();
+		statement.close();
+		
+		return userData;
+	}
+	
+	private void riempi_dati_account(User userData, ResultSet result) throws SQLException {
+		userData.email  			= result.getString("email");
+		userData.userId				= result.getString("userId");
+		userData.nome				= result.getString("nome");
+		userData.cognome			= result.getString("cognome");
+		userData.setCodice_fiscale(result.getString("codice_fiscale"));
+		userData.telefono_fisso		= result.getString("telefono_fisso");
+		userData.telefono_mobile 	= result.getString("telefono_mobile");
+		userData.email_secondaria	= result.getString("email_secondaria");
+		userData.setTipo(result.getInt("tipo"));
+	}
 }

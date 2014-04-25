@@ -42,7 +42,7 @@
 		<tr class="risultati">
 			<td>
 				<s:a action="visualizzaProfilo" namespace="/areaoperatore" target="_blank">
-					<s:param name="utente" value="#feedback.Utente_email" />
+					<s:param name="email" value="#feedback.Utente_email" />
 					
 					<s:property value="#feedback.Utente_email" />
 				</s:a>
