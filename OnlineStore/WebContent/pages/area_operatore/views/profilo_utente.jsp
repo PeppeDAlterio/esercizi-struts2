@@ -1,12 +1,31 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 
+<sj:head jqueryui="true" jquerytheme="ui-lightness" />
+
+
+<%-- BEAN: Leggo dati utente --%>
 <s:bean name="it.store.bean.account.DettAccountBean" var="accountBean">
 	<s:param name="email" value="#parameters.email" />
 	<s:param name="userId" value="#parameters.userid" />
 </s:bean>
 
+<script type="text/javascript">		
+	$(function(){
+		
+		$("#profiloForm :input").attr('disabled', true);
+		$("#profiloForm :submit").attr('disabled', true);
+		
+	});
+	
+	function consentiModifica() {
+		$("#profiloForm :input").attr('disabled', false);
+		$("#profiloForm :submit").attr('disabled', false);
+	}
+</script>
+
 <s:push value="#accountBean.userData">
-	<table class="commonTable">
+	<table class="commonTable" style="width: 90%;">
 		
 		<tr class="commonTr">
 			<th class="commonTh" colspan="2">
@@ -15,87 +34,28 @@
 		</tr>
 		
 		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.email" />
-			</td>
-			<td class="commonTd">
-				<s:property value="email" default="N/A" />
-			</td>
-		</tr>
-		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.userId" />
-			</td>
-			<td class="commonTd">
-				<s:property value="userId" default="N/A" />
-			</td>
-		</tr>
-		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.nome" />
-			</td>
-			<td class="commonTd">
-				<s:property value="nome" default="N/A" />
+			<td>
+				<s:form id="profiloForm" action="modificaAccount" namespace="/areaoperatore" cssStyle="margin: auto;">
+					<s:hidden key="old_email" value="%{email}" />
+					<s:textfield label="%{getText('profiloView.email')}" key="email" readonly="true" />
+					<s:textfield label="%{getText('profiloView.userId')}" key="userId" />
+					<s:textfield label="%{getText('profiloView.nome')}" key="nome" />
+					<s:textfield label="%{getText('profiloView.cognome')}" key="cognome" />
+					<s:textfield label="%{getText('profiloView.codice_fiscale')}" key="codice_fiscale" />
+					<s:textfield label="%{getText('profiloView.telefono_fisso')}" key="telefono_fisso" />
+					<s:textfield label="%{getText('profiloView.telefono_mobile')}" key="telefono_mobile" />
+					<s:textfield label="%{getText('profiloView.email_secondaria')}" key="email_secondaria" />
+					<s:hidden key="old_tipo" value="%{tipo}" />
+					<s:select label="%{getText('profiloView.tipo')}" key="tipo" list="#{1:1, 2:2, 3:3 }" />
+					<s:submit value="%{getText('profiloView.submit')}" />
+				</s:form>
 			</td>
 		</tr>
-		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.cognome" />
-			</td>
-			<td class="commonTd">
-				<s:property value="cognome" default="N/A" />
-			</td>
-		</tr>
-		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.codice_fiscale" />
-			</td>
-			<td class="commonTd">
-				<s:property value="codice_fiscale" default="N/A" />
-			</td>
-		</tr>
-		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.telefono_fisso" />
-			</td>
-			<td class="commonTd">
-				<s:property value="telefono_fisso" default="N/A" />
-			</td>
-		</tr>
-		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.telefono_mobile" />
-			</td>
-			<td class="commonTd">
-				<s:property value="telefono_mobile" default="N/A" />
-			</td>
-		</tr>
-		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.email_secondaria" />
-			</td>
-			<td class="commonTd">
-				<s:property value="email_secondaria" default="N/A" />
-			</td>
-		</tr>
-		<tr class="commonTr">
-			<td class="commonTd">
-				<s:text name="profiloView.tipo" />
-			</td>
-			<td class="commonTd">
-				<s:property value="tipo_stringa" default="N/A" />
-			</td>
-		</tr>
-		
 	</table>
 	
 	<%-- La modifica è permessa solo per account di livello uguale o inferiore a quello in uso --%>
 	<s:if test="%{tipo <= #session.userData.tipo}">
-		<s:a action="modificaAccount" namespace="/areaoperatore">
-			<s:param name="email" value="%{email}" />
-			
-			<s:text name="profiloView.modifica" />
-		</s:a>
+		<input type="button" value="<s:text name='profiloView.modifica' />" onclick="consentiModifica();" />
 	</s:if>
 		
 </s:push>
