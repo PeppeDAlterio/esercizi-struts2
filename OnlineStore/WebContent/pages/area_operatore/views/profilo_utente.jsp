@@ -10,11 +10,27 @@
 	<s:param name="userId" value="#parameters.userid" />
 </s:bean>
 
-<script type="text/javascript">		
+<script type="text/javascript">	
+
+function getUrlParam(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return decodeURIComponent(sParameterName[1]);
+        }
+    }
+}
 	$(function(){
-		
-		$("#profiloForm :input").attr('disabled', true);
-		$("#profiloForm :submit").attr('disabled', true);
+			
+		if(getUrlParam("edit") == null) {
+			$("#profiloForm :input").attr('disabled', true);
+			$("#profiloForm :submit").attr('disabled', true);
+		}
 		
 	});
 	
@@ -23,6 +39,27 @@
 		$("#profiloForm :submit").attr('disabled', false);
 	}
 </script>
+
+<s:if test="hasActionErrors()">
+   <div class="actionError">
+      <s:iterator value="actionErrors">
+        <div align="center">
+			<span><s:property escape="false" /></span>
+		</div>
+	  </s:iterator>
+   </div>
+   <br>
+</s:if>
+<s:if test="hasActionMessages()">
+   <div class="actionMessage">
+      <s:iterator value="actionMessages">
+        <div align="center">
+			<span><s:property escape="false" /></span>
+		</div>
+	  </s:iterator>
+   </div>
+   <br>
+</s:if>
 
 <s:push value="#accountBean.userData">
 	<table class="commonTable" style="width: 90%;">
@@ -36,7 +73,6 @@
 		<tr class="commonTr">
 			<td>
 				<s:form id="profiloForm" action="modificaAccount" namespace="/areaoperatore" cssStyle="margin: auto;">
-					<s:hidden key="old_email" value="%{email}" />
 					<s:textfield label="%{getText('profiloView.email')}" key="email" readonly="true" />
 					<s:textfield label="%{getText('profiloView.userId')}" key="userId" />
 					<s:textfield label="%{getText('profiloView.nome')}" key="nome" />
@@ -47,6 +83,13 @@
 					<s:textfield label="%{getText('profiloView.email_secondaria')}" key="email_secondaria" />
 					<s:hidden key="old_tipo" value="%{tipo}" />
 					<s:select label="%{getText('profiloView.tipo')}" key="tipo" list="#{1:1, 2:2, 3:3 }" />
+					<div style="text-style: italic;">
+						1: <s:text name="cliente" />
+						<br>
+						2: <s:text name="operatore" />
+						<br>
+						3: <s:text name="amministratore" />
+					</div>
 					<s:submit value="%{getText('profiloView.submit')}" />
 				</s:form>
 			</td>

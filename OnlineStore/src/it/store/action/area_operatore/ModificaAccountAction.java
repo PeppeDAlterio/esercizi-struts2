@@ -1,8 +1,11 @@
 package it.store.action.area_operatore;
 
+import java.sql.SQLException;
+
 import org.apache.commons.lang3.StringUtils;
 
 import it.store.dto.User;
+import it.store.service.AccountService;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -10,10 +13,11 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 
 @SuppressWarnings("serial")
-public class ModificaProfiloAction extends ActionSupport implements ModelDriven<User>, Preparable {
-	//TODO: SDDHGDG
-	private String old_email,
-				   old_tipo;
+public class ModificaAccountAction extends ActionSupport implements ModelDriven<User>, Preparable {
+	
+	public String edit = "true";
+	
+	private String old_tipo;
 	
 	private User nuoviDati = new User();
 	
@@ -27,16 +31,10 @@ public class ModificaProfiloAction extends ActionSupport implements ModelDriven<
 	
 	
 	public void validate() {
-		/* controllo che non vi siano campi vuoti */
-		if(StringUtils.isBlank(userData.email)) {
-			addFieldError("email", getText("fieldError.campo_vuoto"));
-		}
 		if(StringUtils.isBlank(userData.userId)) {
 			addFieldError("userId", getText("fieldError.campo_vuoto"));
 		}
-		if(StringUtils.isBlank(userData.getPassword())) {
-			addFieldError("password", getText("fieldError.campo_vuoto"));
-		}
+
 		if(StringUtils.isBlank(userData.nome)) {
 			addFieldError("nome", getText("fieldError.campo_vuoto"));
 		}
@@ -85,18 +83,71 @@ public class ModificaProfiloAction extends ActionSupport implements ModelDriven<
 	
 	
 	public String execute() {
+		
+		int tipo_account = -1;
+		try {
+			tipo_account = Integer.parseInt(getOld_tipo());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			addActionError(getText("errori.generico"));
+			return ERROR;
+		} finally {
+			if(tipo_account<0) {
+				addActionError(getText("errori.generico"));
+				return ERROR;
+			}
+		}
+		
+		if(userData==null) { //??
+			return LOGIN;
+		}
+		
+		//controllo che l'account modificato sia di tipo uguale o inferiore
+		//il controllo che sia operatore viene effettuato dall'interceptor
+		if(userData.getTipo()<tipo_account) {
+			return "access_denied";
+		}
+		
+		AccountService accountService;
+		try {
+			accountService = new AccountService();
+			accountService.modificaAccount(nuoviDati.email, nuoviDati);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			addActionError(getText("errori.generico"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			/* messaggi di errore per 'duplicate' (email già in uso, userId già in uso,...) */
+			controllo_duplicati(e.getMessage());
+		} finally {
+			accountService = null;
+			
+			if(hasErrors()) {
+				return ERROR;
+			}
+		}
+		
 		return SUCCESS;
 	}
-
-	public String getOld_email() {
-		return old_email;
+	
+	private void controllo_duplicati(String errore) {
+		if(errore.contains("Duplicate")) {
+			if(errore.contains("PRIMARY")) {
+				addActionError(getText("errori.user.email_in_uso"));
+				addFieldError("email", getText("errori.user.email_in_uso"));
+			}
+			else if (errore.contains("userid")) {
+				addActionError(getText("errori.user.userid_in_uso"));
+				addFieldError("userId", getText("errori.user.userid_in_uso"));
+			}
+			else if (errore.contains("codice_fiscale")) {
+				addActionError(getText("errori.user.cf_in_uso"));
+				addFieldError("codice_fiscale", getText("errori.user.cf_in_uso"));
+			}
+		} else {
+			addActionError(getText("sql.generic"));
+		}
 	}
-
-
-	public void setOld_email(String old_email) {
-		this.old_email = old_email;
-	}
-
 
 	public String getOld_tipo() {
 		return old_tipo;

@@ -9,7 +9,7 @@
 														 it.resources.properties.errori" />
 	
 	<constant name="struts.devMode" value="true" /> 
-
+	
 
 <!-- Tiles -->
 <package name="tiles" extends="struts-default">

@@ -8,7 +8,7 @@
 			</s:a>
 		</td>
 	<td>
-		<s:form action="cerca" namespace="/" theme="simple" method="GET">
+		<s:form action="cerca" namespace="/catalogo" theme="simple" method="GET">
 			<s:text name="userbar.ricerca" />&nbsp;:&nbsp;<s:textfield key="q" cssStyle="width: 70%;" required="true" />&nbsp;<s:submit value="%{getText('userbar.cerca_button')}" />
 		</s:form>
 	</td>

@@ -21,6 +21,11 @@
 		<result type="tiles">schedaArticolo</result>
 	</action>
 	
+	<!-- Ricerca articoli -->
+	<action name="cerca" class="it.store.action.catalogo.RicercaArticoliAction">
+		
+	</action>
+	
 </package>
 
 </struts>
