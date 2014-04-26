@@ -211,6 +211,46 @@
 			
 			<result name="*" type="tiles">feedbackDaApprovare</result>
 		</action>
+		
+	<!-- Gestione account -->
+		<!-- Ricerca account -->
+		<action name="gestioneAccount">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">ricercaAccountUtente</result>
+		</action>
+		
+		<!-- Visualizza profilo -->
+		<action name="visualizzaProfilo">	
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">profiloAccountUtente</result>
+		</action>
+		
+		<!-- Modifica account -->
+		<action name="modificaAccount" class="it.store.action.area_operatore.ModificaAccountAction">
+			<result name="login" type="tiles">loginForm</result>
+			
+			<result name="access_denied" type="redirectAction">
+				<param name="actionName">403</param>
+				<param name="namespace">/</param>
+			</result>
+			
+			
+			<result name="*" type="tiles">profiloAccountUtente</result>
+		</action>
 	
 </package>
 

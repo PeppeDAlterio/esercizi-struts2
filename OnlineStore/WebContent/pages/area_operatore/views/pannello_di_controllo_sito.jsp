@@ -60,14 +60,18 @@
 	<!-- INIZIO gestione accounts -->
 	<tr class="commonTr">
 		<th class="commonTh" style="text-align: left;">
-			<s:property value="getText('pcView.ges_accounts')" />
+			<s:text name="pcView.ges_accounts" />
 		</th>
 	</tr>
 	
 	<tr class="commonTr">
 		<td class="commonTh" style="text-align: left;">
 			<ul>
-			<li><s:property value="getText('pcView.ges_account')" /></li>
+			<li>
+				<s:a action="gestioneAccount" namespace="/areaoperatore">
+					<s:property value="getText('pcView.ges_account')" />
+				</s:a>
+			</li>
 			<s:if test="%{#session.userData.tipo>2}">
 				<!-- ADMIN+ -->
 				<li>

@@ -106,4 +106,77 @@ public class AccountService extends DatabaseService {
 		
 		return errore;
 	}
+
+	public User getAccountByEmail(String email) throws SQLException {
+		
+		User userData = new User();
+		
+		String query = "SELECT * FROM Utente WHERE email=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, email);
+		ResultSet result = statement.executeQuery();
+		
+		if(result.next()) {
+			riempi_dati_account(userData, result);
+		} else {
+			userData = null;
+		}
+		
+		result.close();
+		statement.close();
+		
+		return userData;
+	}
+
+	public User getAccountByUserId(String userId) throws SQLException {
+		
+		User userData = new User();
+		
+		String query = "SELECT * FROM Utente WHERE userId=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, userId);
+		ResultSet result = statement.executeQuery();
+		
+		if(result.next()) {
+			riempi_dati_account(userData, result);
+		} else {
+			userData = null;
+		}
+		
+		result.close();
+		statement.close();
+		
+		return userData;
+	}
+	
+	public void modificaAccount(String email, User nuoviDati) throws SQLException {
+		String query = "UPDATE Utente SET userId=?, nome=?, cognome=?, codice_fiscale=?, telefono_fisso=?, telefono_mobile=?, "
+						+ "email_secondaria=?, tipo=? WHERE email=?";
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, nuoviDati.userId);
+		statement.setString(2, nuoviDati.nome);
+		statement.setString(3, nuoviDati.cognome);
+		statement.setString(4, nuoviDati.getCodice_fiscale());
+		statement.setString(5, nuoviDati.telefono_fisso);
+		statement.setString(6, nuoviDati.telefono_mobile);
+		statement.setString(7, nuoviDati.email_secondaria);
+		statement.setInt(8, nuoviDati.getTipo());
+		statement.setString(9, email);
+		
+		statement.executeUpdate();
+		
+		statement.close();
+	}
+	
+	private void riempi_dati_account(User userData, ResultSet result) throws SQLException {
+		userData.email  			= result.getString("email");
+		userData.userId				= result.getString("userId");
+		userData.nome				= result.getString("nome");
+		userData.cognome			= result.getString("cognome");
+		userData.setCodice_fiscale(result.getString("codice_fiscale"));
+		userData.telefono_fisso		= result.getString("telefono_fisso");
+		userData.telefono_mobile 	= result.getString("telefono_mobile");
+		userData.email_secondaria	= result.getString("email_secondaria");
+		userData.setTipo(result.getInt("tipo"));
+	}
 }

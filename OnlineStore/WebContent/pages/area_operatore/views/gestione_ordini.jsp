@@ -102,7 +102,7 @@
 				</td>
 				<td>
 					<s:a action="visualizzaProfilo" namespace="/areaoperatore" target="_blank">
-						<s:param name="utente" value="#ordine.Utente_email" />
+						<s:param name="email" value="#ordine.Utente_email" />
 					
 						<s:property value="#ordine.Utente_email" />
 					</s:a>

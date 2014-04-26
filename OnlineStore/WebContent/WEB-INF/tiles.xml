@@ -223,6 +223,19 @@
 			<put-attribute name="title" value="Gestione feedback" />
 			<put-attribute name="body" value="/pages/area_operatore/views/gestione_feedback.jsp" />
 		</definition>
+		
+	<!-- Gestione account -->
+		<!-- Ricerca account -->
+		<definition name="ricercaAccountUtente" extends="azione">
+			<put-attribute name="title" value="Gestione account" />
+			<put-attribute name="body" value="/pages/area_operatore/forms/ricerca_account.jsp" />
+		</definition>
+		
+		<!-- Profilo account -->
+		<definition name="profiloAccountUtente" extends="azione">
+			<put-attribute name="title" value="Profilo account" />
+			<put-attribute name="body" value="/pages/area_operatore/views/profilo_utente.jsp" />
+		</definition>
 <!-- FINE Area operatore -->
 
 <!-- INIZIO Area amministratore -->
