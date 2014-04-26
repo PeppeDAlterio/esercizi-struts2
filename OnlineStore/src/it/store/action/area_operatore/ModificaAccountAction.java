@@ -51,7 +51,7 @@ public class ModificaAccountAction extends ActionSupport implements ModelDriven<
 			return;
 		}
 
-		/* controllo validità email primaria ed eventuale email secondaria */
+		/* controllo validitï¿½ email primaria ed eventuale email secondaria */
 		if( !(userData.email.indexOf("@")>0 && userData.email.lastIndexOf(".")-userData.email.indexOf("@")>1) ) {
 			addFieldError("email", getText("fieldError.formato_errato"));
 		}
@@ -64,7 +64,7 @@ public class ModificaAccountAction extends ActionSupport implements ModelDriven<
 			userData.email_secondaria = null;
 		}
 		
-		/* controllo la validità dei numeri di telefono */
+		/* controllo la validitï¿½ dei numeri di telefono */
 		if(!StringUtils.isBlank(userData.telefono_fisso)) {
 			if( !(StringUtils.isNumeric(userData.telefono_fisso) && userData.telefono_fisso.length()>9) ) {
 				addFieldError("telefono_fisso", getText("fieldError.formato_errato"));
@@ -117,7 +117,7 @@ public class ModificaAccountAction extends ActionSupport implements ModelDriven<
 			addActionError(getText("errori.generico"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-			/* messaggi di errore per 'duplicate' (email già in uso, userId già in uso,...) */
+			/* messaggi di errore per 'duplicate' (email giï¿½ in uso, userId giï¿½ in uso,...) */
 			controllo_duplicati(e.getMessage());
 		} finally {
 			accountService = null;
@@ -126,6 +126,8 @@ public class ModificaAccountAction extends ActionSupport implements ModelDriven<
 				return ERROR;
 			}
 		}
+		
+		edit = null; //fine modifica
 		
 		return SUCCESS;
 	}
