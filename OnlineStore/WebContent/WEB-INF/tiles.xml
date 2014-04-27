@@ -61,6 +61,12 @@
 		<put-attribute name="body" value="/pages/catalogo/views/scheda_articolo.jsp" />
 	</definition>
 	
+	<!-- Ricerca articoli catalogo -->
+	<definition name="ricercaArticoliCatalogo" extends="catalogo">
+		<put-attribute name="title" value="Ricerca" />
+		<put-attribute name="body" value="/pages/catalogo/views/ricerca_articoli.jsp" />
+	</definition>
+	
 <!-- FINE Catalogo -->
 
 <!--  -->

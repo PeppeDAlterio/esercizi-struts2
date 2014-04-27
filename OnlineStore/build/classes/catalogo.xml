@@ -23,7 +23,7 @@
 	
 	<!-- Ricerca articoli -->
 	<action name="cerca" class="it.store.action.catalogo.RicercaArticoliAction">
-		
+		<result name="*" type="tiles">ricercaArticoliCatalogo</result>
 	</action>
 	
 </package>

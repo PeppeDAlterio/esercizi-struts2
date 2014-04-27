@@ -279,16 +279,8 @@ public class CatalogoService extends DatabaseService {
 		statement.setString(2, filtro.getMarca());
 		statement.setString(3, filtro.getNome());
 		statement.setString(4, filtro.getCodice_modello());
-		if(filtro.getPrezzo_min()==null) {
-			statement.setFloat(5, -1.0f);
-		} else {
-			statement.setFloat(5, Float.parseFloat(filtro.getPrezzo_min()));
-		}
-		if(filtro.getPrezzo_max()==null) {
-			statement.setFloat(6, 99999.9f);
-		} else {
-			statement.setFloat(6, Float.parseFloat(filtro.getPrezzo_max()));
-		}
+		statement.setFloat(5, Float.parseFloat(filtro.getPrezzo_min()));
+		statement.setFloat(6, Float.parseFloat(filtro.getPrezzo_max()));
 
 		if(filtro.isScontato()) {
 			statement.setFloat(7, 0.0f);
@@ -334,6 +326,67 @@ public class CatalogoService extends DatabaseService {
 		stmt.close();
 						
 		return numero_pagine;
+	}
+	
+	public int ricercaArticoli_cliente(FiltroRicercaArticoli filtro, int page, List<Articolo> listaArticoli) throws SQLException {
+		
+		//verifico il filtro di ricerca
+		filtro.validate();
+		
+		String query;
+		
+		if(filtro.getCategoria()==null || filtro.getCategoria().equals("%")) {
+			query = "SELECT * FROM Articolo WHERE marca LIKE ? AND nome LIKE ? AND (categoria LIKE ? OR categoria IS NULL)"
+					+ " AND (prezzo_finale<? AND prezzo_finale>?) AND quantita>0 LIMIT ?, 10";
+		} else {
+			query = "SELECT * FROM Articolo WHERE marca LIKE ? AND nome LIKE ? AND categoria LIKE ? "
+					+ " AND (prezzo_finale<? AND prezzo_finale>?) AND quantita>0 LIMIT ?, 10";
+		}
+		
+		PreparedStatement statement = conn.prepareStatement(query);
+		statement.setString(1, filtro.getMarca());
+		statement.setString(2, filtro.getNome());
+		statement.setString(3, filtro.getCategoria());
+		statement.setString(4, filtro.getPrezzo_max());
+		statement.setString(5, filtro.getPrezzo_min());
+		statement.setInt(6, page*10);
+		
+		ResultSet result = statement.executeQuery();
+		
+		Articolo tmp;
+		while(result.next()) {
+			tmp = new Articolo();
+			
+			riempiArticolo(result, tmp);
+			
+			listaArticoli.add(tmp);
+		}
+		
+		result.close();
+		statement.close();
+		
+		//leggo numero pagine totali:
+		int totale_pagine = 0;
+		
+		query = "SELECT COUNT(*) " + query.subSequence(query.indexOf("FROM"), query.lastIndexOf("LIMIT"));
+	
+		statement = conn.prepareStatement(query);
+		statement.setString(1, filtro.getMarca());
+		statement.setString(2, filtro.getNome());
+		statement.setString(3, filtro.getCategoria());
+		statement.setString(4, filtro.getPrezzo_max());
+		statement.setString(5, filtro.getPrezzo_min());
+		
+		result = statement.executeQuery();
+		
+		if(result.next()) { //???
+			totale_pagine = (int) Math.ceil(result.getInt(1)/10.0);
+		}
+		
+		result.close();
+		statement.close();
+		
+		return totale_pagine;
 	}
 	
 	private void riempiArticolo(ResultSet result, Articolo articolo) throws SQLException {
