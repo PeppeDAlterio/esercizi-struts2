@@ -83,8 +83,15 @@ public class FiltroRicercaArticoli {
 
 	public void setPrezzo_min(String prezzo_min) {
 		if(StringUtils.isBlank(prezzo_min)) {
-			prezzo_min = null;
+			prezzo_min = "0";
 		}
+		
+		try {
+			Float.parseFloat(prezzo_min);
+		} catch (NumberFormatException e) {
+			prezzo_min = "0";
+		}
+		
 		this.prezzo_min = prezzo_min;
 	}
 
@@ -94,8 +101,15 @@ public class FiltroRicercaArticoli {
 
 	public void setPrezzo_max(String prezzo_max) {
 		if(StringUtils.isBlank(prezzo_max)) {
-			prezzo_max = null;
+			prezzo_max = "999999";
 		}
+		
+		try {
+			Float.parseFloat(prezzo_max);
+		} catch (NumberFormatException e) {
+			prezzo_max = "999999";
+		}
+		
 		this.prezzo_max = prezzo_max;
 	}
 
@@ -105,6 +119,19 @@ public class FiltroRicercaArticoli {
 
 	public void setScontato(boolean scontato) {
 		this.scontato = scontato;
+	}
+	
+	
+	/* 
+	 * metodo che controlla che tutti i campi relativi alla ricerca di articoli in catalogo (/catalogo/cerca.action) siano riempiti correttamente
+	 */
+	public void validate() {
+		setCategoria(getCategoria());
+		setMarca(getMarca());
+		setNome(getNome());
+		setCodice_modello(getCodice_modello());
+		setPrezzo_min(getPrezzo_min());
+		setPrezzo_max(getPrezzo_max());
 	}
 
 }

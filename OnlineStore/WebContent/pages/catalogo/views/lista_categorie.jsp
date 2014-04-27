@@ -27,7 +27,7 @@
 		
 		<s:else>
 			<li>
-				<s:a action="cerca" namespace="/">
+				<s:a action="cerca" namespace="/catalogo">
 					<s:param name="categoria" value="%{cat}" />
 					<s:property />
 				</s:a>

@@ -9,7 +9,8 @@
 		</td>
 	<td>
 		<s:form action="cerca" namespace="/catalogo" theme="simple" method="GET">
-			<s:text name="userbar.ricerca" />&nbsp;:&nbsp;<s:textfield key="q" cssStyle="width: 70%;" required="true" />&nbsp;<s:submit value="%{getText('userbar.cerca_button')}" />
+			<s:hidden key="categoria" value="%" />
+			<s:text name="userbar.ricerca" />&nbsp;:&nbsp;<s:textfield key="nome" cssStyle="width: 70%;" value="" required="true" />&nbsp;<s:submit value="%{getText('userbar.cerca_button')}" />
 		</s:form>
 	</td>
 	<td>
