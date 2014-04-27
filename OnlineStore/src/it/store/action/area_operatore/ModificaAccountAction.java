@@ -108,6 +108,11 @@ public class ModificaAccountAction extends ActionSupport implements ModelDriven<
 			return "access_denied";
 		}
 		
+		//l'operatore non può modificare sé stesso!
+		if(userData.getTipo()==2 && tipo_account==2) {
+			return "access_denied";
+		}
+		
 		AccountService accountService;
 		try {
 			accountService = new AccountService();
