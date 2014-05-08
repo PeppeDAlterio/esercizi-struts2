@@ -108,8 +108,8 @@ public class ModificaAccountAction extends ActionSupport implements ModelDriven<
 			return "access_denied";
 		}
 		
-		//l'operatore non può modificare sé stesso!
-		if(userData.getTipo()==2 && tipo_account==2) {
+		//impossibile modificare account del proprio tipo, almeno non sia admin
+		if(userData.getTipo()==tipo_account && userData.getTipo()<3) {
 			return "access_denied";
 		}
 		
